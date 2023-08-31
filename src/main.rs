@@ -86,7 +86,7 @@ fn main() {
             );
     process::exit(1);
 }
-#[allow(dead_code)]
+
 fn to_file(contents: &str, file: &str) {
     to_file2(contents, file)
         .map_err(|err| println!("{:?}", err))
@@ -97,7 +97,7 @@ fn to_file2(contents: &str, file: &str) -> std::io::Result<()> {
     file.write_all(contents.as_bytes())?;
     Ok(())
 }
-#[allow(dead_code)]
+
 fn from_file(file: &str) -> String {
     let mut o = File::open(file).expect("We need a file!");
     let mut contents = String::new();
