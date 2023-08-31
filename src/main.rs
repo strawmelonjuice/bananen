@@ -7,13 +7,6 @@ use std::process;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 fn main() {
-    // To file:
-    // to_file("testje", "hi.txt");
-
-    // From file:
-    // let _inhetbestand: &String = &from_file("hi.txt");
-    // println!("{}", inhetbestand);
-
     let command = env::args().nth(1).unwrap_or("none".to_string());
     println!("{style_bold}{color_yellow}Bananen! 🍌{color_reset} v{VERSION}\n{style_reset}By {color_red}Straw{color_green}melon{color_yellow}juice {color_magenta}Mar{color_reset}.");
     if command == "none" {
