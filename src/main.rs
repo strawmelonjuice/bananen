@@ -7,6 +7,8 @@ use std::process;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 fn main() {
+    let me_bin = env::args().nth(0).unwrap_or("unknown".to_string());
+    // println!("{}", me_bin);
     let command = env::args().nth(1).unwrap_or("none".to_string());
     println!("{style_bold}{color_yellow}Bananen! 🍌{color_reset} v{VERSION}\n{style_reset}By {color_red}Straw{color_green}melon{color_yellow}juice {color_magenta}Mar{color_reset}.");
     if command == "none" {
@@ -21,6 +23,7 @@ fn main() {
     let _a = env::args().nth(2).unwrap_or("".to_string());
     let _b = env::args().nth(3).unwrap_or("".to_string());
     let _c = env::args().nth(4).unwrap_or("".to_string());
+    let _d = env::args().nth(5).unwrap_or("".to_string());
     let savefile: &str = &get_save_file_path();
     if command == "help" {
         if _a == "" || _a == "1" {
@@ -80,6 +83,10 @@ fn main() {
         process::exit(1);
     }
     let _savedata: json::JsonValue = load_save_file();
+    if command == "add" {
+        println!("I'm working on this rn!");
+        process::exit(1);
+    }
     println!(
                 "{color_red}ERROR:{color_reset} Unknown command. Use `{color_yellow}bananen{color_reset} {color_blue}help{color_reset}` for help."
             );
