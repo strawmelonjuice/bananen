@@ -21,7 +21,7 @@ fn main() {
     let _a = env::args().nth(2).unwrap_or("".to_string());
     let _b = env::args().nth(3).unwrap_or("".to_string());
     let _c = env::args().nth(4).unwrap_or("".to_string());
-    let savefile = get_save_file_path();
+    let savefile: &str = &get_save_file_path();
     if command == "help" {
         if _a == "" || _a == "1" {
             println!(
