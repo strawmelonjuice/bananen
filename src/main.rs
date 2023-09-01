@@ -31,18 +31,18 @@ fn main() {
                 r#"
     {color_yellow}Bananen{color_reset} help -- page {style_underline}1{style_reset} of 1.
         {style_bold}{color_blue}add{color_reset}{style_reset}     Add new changes to unreleased.
-            Usage: `{color_yellow}bananen{color_reset} {color_blue}add{color_reset} <type> <title> [--breaking]`
+            Usage: `{color_yellow}{me_bin}{color_reset} {color_blue}add{color_reset} <type> <title> [--breaking]`
                 Options:
                     types: removal, fix, addition, update
                     flags:
                     --breaking: Will add a breaking warning to the changelog.
-                Example usage: `{color_yellow}bananen{color_reset} {color_blue}add{color_reset} --breaking "Fixed all the things"`
+                Example usage: `{color_yellow}{me_bin}{color_reset} {color_blue}add{color_reset} --breaking "Fixed all the things"`
 
         {style_bold}{color_blue}dub{color_reset}{style_reset}     Name unreleased changes into a release.
-                Example usage: `{color_yellow}bananen{color_reset} {color_blue}dub{color_reset} "V1.29.3"`
+                Example usage: `{color_yellow}{me_bin}{color_reset} {color_blue}dub{color_reset} "V1.29.3"`
 
         {style_bold}{color_blue}set{color_reset}{style_reset}     Change config in '{color_cyan}{savefile}{color_reset}'.
-                Example usage: `{color_yellow}bananen{color_reset} {color_blue}set{color_reset} changelogfile logchange.MD`
+                Example usage: `{color_yellow}{me_bin}{color_reset} {color_blue}set{color_reset} changelogfile logchange.MD`
 
         {style_bold}{color_blue}init{color_reset}{style_reset}    Initialise the current folder with a brand new '{color_cyan}{savefile}{color_reset}'.
 
@@ -72,23 +72,27 @@ fn main() {
   },
   "entries": {}
 };
-        println!("Writing clean setup to '{color_cyan}{savefile}{color_reset}'!");
+        println!("Writing new save data to '{color_cyan}{savefile}{color_reset}'!");
         to_file(&clean_save_data.dump(), &savefile);
         process::exit(0);
     }
     if !Path::new(&get_save_file_path()).exists() {
         println!(
-                "{color_red}ERROR:{color_reset} No '{color_cyan}{savefile}{color_reset}' found. Use `{color_yellow}bananen{color_reset} {color_blue}init{color_reset}` to create one."
+                "{color_red}ERROR:{color_reset} No '{color_cyan}{savefile}{color_reset}' found. Use `{color_yellow}{me_bin}{color_reset} {color_blue}init{color_reset}` to create one."
             );
         process::exit(1);
     }
-    let _savedata: json::JsonValue = load_save_file();
+    let _savedata = load_save_file();
     if command == "add" {
         println!("I'm working on this rn!");
-        process::exit(1);
+        let savedata = load_save_file();
+
+        println!("{}", savedata.get("config").unwrap().get("changelogfile").unwrap());
+        process::exit(0);
     }
+
     println!(
-                "{color_red}ERROR:{color_reset} Unknown command. Use `{color_yellow}bananen{color_reset} {color_blue}help{color_reset}` for help."
+                "{color_red}ERROR:{color_reset} Unknown command. Use `{color_yellow}{me_bin}{color_reset} {color_blue}help{color_reset}` for help."
             );
     process::exit(1);
 }
@@ -111,12 +115,11 @@ fn from_file(file: &str) -> String {
         .expect("ERROR: Expected I could read that file!");
     return contents;
 }
-fn load_save_file() -> json::JsonValue {
+fn load_save_file() -> serde_json::Value {
     let savefile = &get_save_file_path();
     let unparsed_confi = from_file(savefile);
     let unparsed_config: &str = unparsed_confi.as_str();
-    let parsedsavefile = json::parse(unparsed_config)
-        .expect("ERROR: Expected I could understand {savefile}! If you don't mind resetting everything bananen has done, please reinitialise it with `bananen init`.");
+    let parsedsavefile = serde_json::from_str(unparsed_config).expect("ERROR: Expected I could understand {savefile}! If you don't mind resetting everything bananen has done, please reinitialise it with `{me_bin} init`.");
     return parsedsavefile;
 }
 fn get_save_file_path() -> std::string::String {
