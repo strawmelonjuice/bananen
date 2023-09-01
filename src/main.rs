@@ -38,10 +38,10 @@ fn main() {
         {style_bold}{color_blue}dub{color_reset}{style_reset}     Name unreleased changes into a release.
                 Example usage: `{color_yellow}bananen{color_reset} {color_blue}dub{color_reset} "V1.29.3"`
 
-        {style_bold}{color_blue}set{color_reset}{style_reset}     Change config in `{color_cyan}{savefile}{color_reset}`.
+        {style_bold}{color_blue}set{color_reset}{style_reset}     Change config in '{color_cyan}{savefile}{color_reset}'.
                 Example usage: `{color_yellow}bananen{color_reset} {color_blue}set{color_reset} changelogfile logchange.MD`
 
-        {style_bold}{color_blue}init{color_reset}{style_reset}    Initialise the current folder with a brand new `{color_cyan}{savefile}{color_reset}`.
+        {style_bold}{color_blue}init{color_reset}{style_reset}    Initialise the current folder with a brand new '{color_cyan}{savefile}{color_reset}'.
 
         {style_bold}{color_blue}help{color_reset}{style_reset}    Display this page."#
             );
@@ -53,10 +53,9 @@ fn main() {
             if _a != "--proceed" {
                 println!(
                     r#"
-                {color_red}Warning:{color_reset}
-                `{color_cyan}{savefile}{color_reset}` already exists.
-                Use with {color_black}{bg_white}--proceed{color_reset}{bg_reset} if you're willing to overwrite it.
-                Canceled!"#
+    {color_red}Warning:{color_reset}
+    '{color_cyan}{savefile}{color_reset}' already exists.
+    Use with {color_black}{bg_white}--proceed{color_reset}{bg_reset} if you're willing to overwrite it."#
                 );
                 process::exit(0);
             }
@@ -70,13 +69,13 @@ fn main() {
   },
   "entries": {}
 };
-        println!("Writing clean setup to `{color_cyan}{savefile}{color_reset}`!");
+        println!("Writing clean setup to '{color_cyan}{savefile}{color_reset}'!");
         to_file(&clean_save_data.dump(), &savefile);
         process::exit(0);
     }
     if !Path::new(&get_save_file_path()).exists() {
         println!(
-                "{color_red}ERROR:{color_reset} No `{color_cyan}{savefile}{color_reset}` found. Use `{color_yellow}bananen{color_reset} {color_blue}init{color_reset}` to create one."
+                "{color_red}ERROR:{color_reset} No '{color_cyan}{savefile}{color_reset}' found. Use `{color_yellow}bananen{color_reset} {color_blue}init{color_reset}` to create one."
             );
         process::exit(1);
     }
