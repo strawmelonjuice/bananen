@@ -2,9 +2,10 @@
 
 ## Unreleased
 
+## 0.0.3-pre-alpha
+
 -  **<span style="color: #0033cc">Update</span>**: Every change type now has a color.
 -  **fix**: `'dub'` no longer accepts empty releases.
-
 
 
 ## Testing out dub

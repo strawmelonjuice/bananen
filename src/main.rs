@@ -224,7 +224,7 @@ released= """{releasedchanges}""""#
         let releasename: String = _a.clone();
         let changelogfile = format!("{}", _savedata.config.changelogfile);
         println!(
-            "{color_green}{0}{color_reset}: '{1}' --> {0}@\"{1}\"",
+            "{color_green}{0}{color_reset}: unreleased@'{1}' --> {0}@\"{1}\"",
             releasename,
             return_pathslashfile(&changelogfile)
         );
