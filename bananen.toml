@@ -1,5 +1,5 @@
 [main]
-bananen_version = "0.0.1"
+bananen_version = "0.0.2-pre-alpha"
 
 [config]
 changelogfile = "CHANGELOG.MD"
