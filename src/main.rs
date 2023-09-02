@@ -149,7 +149,7 @@ released= """""""#
             return_pathslashfile(&changelogfile)
         );
         let breakingwarn = if _c == "--breaking" {
-            "<span style=\"font-color: red\">BREAKING!</span>"
+            "<span style=\"color: red; background-color: yellow\">BREAKING!</span>"
         } else {
             ""
         };
