@@ -2,8 +2,19 @@
 
 ## Unreleased
 
--  **addition**: Basic functionality for `'add'`, `'init'` and `'regen'` was added.
+-  **<span style="color: #0033cc">Update</span>**: Every change type now has a color.
+-  **fix**: `'dub'` no longer accepts empty releases.
 
+
+
+## Testing out dub
+
+
+
+## Test
+
+-  **addition**: `'dub'` should now also basically work
+-  **addition**: Basic functionality for `'add'`, `'init'` and `'regen'` was added.
 
 
 
