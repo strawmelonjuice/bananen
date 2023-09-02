@@ -3,6 +3,8 @@ name = "bananen"
 description= "CLI changelog generator written in Rust"
 version = "0.0.3-alpha"
 edition = "2021"
+repository = "https://github.com/strawmelonjuice/bananen/"
+license = "GPL-3.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
