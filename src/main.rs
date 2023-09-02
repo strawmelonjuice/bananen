@@ -57,7 +57,7 @@ fn main() {
                     types: removal, fix, addition, update
                     flags:
                     --breaking: Will add a breaking warning to the changelog.
-                Example usage: `{color_yellow}{me_bin}{color_reset} {color_blue}add{color_reset} {color_black}{bg_white}--breaking{color_reset}{bg_reset} "Fixed all the things"`
+                Example usage: `{color_yellow}{me_bin}{color_reset} {color_blue}add{color_reset} "Fixed all the things" {color_black}{bg_white}--breaking{color_reset}{bg_reset}`
 
         {style_bold}{color_blue}dub{color_reset}{style_reset}     Name unreleased changes into a release.
                 Example usage: `{color_yellow}{me_bin}{color_reset} {color_blue}dub{color_reset} "V1.29.3"`
