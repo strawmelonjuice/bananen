@@ -302,7 +302,8 @@ fn return_pathslashfile(file: &str) -> String {
         format!("{color_red}ERROR:{color_reset} Expected a valid working directory.");
     let cd = env::current_dir().expect(&expectationerror);
     let sep = if cfg!(windows) { "\\" } else { "/" };
-    let returns: String = format!("{0}{sep}{1}", cd.display(), file);
+    let filed = if cfg!(windows) { file.replace("/", "\\") } else {file.replace("\\", "/")};
+    let returns: String = format!("{0}{sep}{1}", cd.display(), filed);
     return returns;
 }
 
