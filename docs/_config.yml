@@ -1,6 +1,5 @@
-title: Bananen!
-author:
-  name: Mar
-  email: mar@strawmelonjuice.com
+# Does HTML work here? I hope so.
+title: '<span style="color: #ffcc00">Bananen</span>! 🍌'
+author: '<a href="https://strawmelonjuice.com/?p=links"><span style="color:#C01C28">Straw</span><span style="color:#26A269">melon</span><span style="color:#ffcc00">juice</span></a>'
 description: A simple CLI changelog.md generator written in Rust.
 theme: minima
