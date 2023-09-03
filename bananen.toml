@@ -5,9 +5,14 @@ bananen_version = "0.0.3-alpha"
 changelogfile = "docs/CHANGELOG.MD"
 
 [changes_md]
-unreleased= """-  **<span style="color: #9900cc">Fix</span>**: Fixed help screen that had a wrong example usage of the 'add' command.
-"""
-released= """## 0.0.3-pre-alpha
+unreleased= """"""
+released= """## v0.0.3-alpha
+
+-  **<span style="color: #0033cc">Update</span>**: Preparing
+-  **<span style="color: #9900cc">Fix</span>**: Fixed help screen that had a wrong example usage of the 'add' command.
+
+
+## 0.0.3-pre-alpha
 
 -  **<span style="color: #0033cc">Update</span>**: Every change type now has a color.
 -  **<span style="color: #9900cc">Fix</span>**: `'dub'` no longer accepts empty releases.

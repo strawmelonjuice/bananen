@@ -2,8 +2,10 @@
 
 ## Unreleased
 
--  **<span style="color: #9900cc">Fix</span>**: Fixed help screen that had a wrong example usage of the 'add' command.
+## v0.0.3-alpha
 
+-  **<span style="color: #0033cc">Update</span>**: Preparing
+-  **<span style="color: #9900cc">Fix</span>**: Fixed help screen that had a wrong example usage of the 'add' command.
 
 
 ## 0.0.3-pre-alpha
