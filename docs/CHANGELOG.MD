@@ -7,6 +7,7 @@
 
 ## Docs
 
+-  **<span style="color: #0033cc">Update</span>**: Moved docs to <https://strawmelonjuice.com/?p=projects/bananen>.
 -  **<span style="color: #0033cc">Update</span>**: Updated /docs a bit, can't decide if I'll keep that on GH pages or give them space on <https://strawmelonjuice.com>.
 
 

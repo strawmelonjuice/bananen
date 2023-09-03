@@ -1,12 +1,9 @@
----
-layout: page
-title: Home
-permalink: /
----
+- [Docs -> Getting started](https://strawmelonjuice.com/?p=projects/bananen/docs)
+- [Get bananen](https://strawmelonjuice.com/?p=projects/bananen/get)
 
 ## Show me
 
-<span style="background-color: #24273a; color: #ffcc00">Bananen</span> also generates changelogs for <span style="background-color: #24273a; color: #ffcc00">bananen</span>! You can see those [here](./CHANGELOG)!
+<span style="background-color: #24273a; color: #ffcc00">Bananen</span> also generates changelogs for <span style="background-color: #24273a; color: #ffcc00">bananen</span>! You can see those [here](https://strawmelonjuice.com/?p=projects/bananen/changelog)!
 
 
 ## Why?
