@@ -14,8 +14,10 @@ serde = { version = "1.0.104", features = ["derive"] }
 toml = "0.7.6"
 
 [package.metadata.bundle]
-name = "Bananen!"
+name = "Bananen"
 identifier = "com.strawmelonjuice.bananentool"
 copyright= "By Strawmelonjuice Mar"
 category= "Developer Tool"
 short_description= "CLI changelog generator written in Rust"
+[package.metadata.generate-rpm]
+assets= [{ source = "target/release/*", dest = "/usr/bin/*", mode = "755" }]
