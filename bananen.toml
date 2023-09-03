@@ -6,7 +6,12 @@ changelogfile = "docs/CHANGELOG.MD"
 
 [changes_md]
 unreleased= """"""
-released= """## v0.0.3-alpha
+released= """## v0.0.4-alpha
+
+-  **<span style="color: #0033cc">Update</span>**: Paths on windows are now no using a \ instead of an / before the file.
+
+
+## v0.0.3-alpha
 
 -  **<span style="color: #0033cc">Update</span>**: Preparing for packaging and release
 -  **<span style="color: #9900cc">Fix</span>**: Fixed help screen that had a wrong example usage of the 'add' command.
