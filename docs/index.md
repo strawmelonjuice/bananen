@@ -1,4 +1,8 @@
-# Home
+---
+layout: page
+title: Home
+permalink: /
+---
 
 ## Show me
 

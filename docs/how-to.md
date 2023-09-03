@@ -1,4 +1,8 @@
-# How to use?
+---
+layout: page
+title: How to use?
+permalink: /help/
+---
 
 Run `bananen h` for help!
 
