@@ -2,9 +2,17 @@
 
 ## Unreleased
 
+
+
+
+## Docs
+
+-  **<span style="color: #0033cc">Update</span>**: Updated /docs a bit, can't decide if I'll keep that on GH pages or give them space on <https://strawmelonjuice.com>.
+
+
 ## v0.0.4-alpha
 
--  **<span style="color: #0033cc">Update</span>**: Paths on windows are now no using a \ instead of an / before the file.
+-  **<span style="color: #0033cc">Update</span>**: Paths on windows are now using a backslash instead of an / before the file.
 
 
 ## v0.0.3-alpha
