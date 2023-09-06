@@ -63,6 +63,7 @@ fn main() {
                 Example usage: `{color_yellow}{me_bin}{color_reset} {color_blue}dub{color_reset} "V1.29.3"`
 
         {style_bold}{color_blue}regen{color_reset}{style_reset}     Regenerate changelog from index in '{color_cyan}{savefile}{color_reset}'.
+        
 
         {style_bold}{color_blue}init{color_reset}{style_reset}    Initialise the current folder with a brand new '{color_cyan}{savefile}{color_reset}'.
 
