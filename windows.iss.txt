@@ -1,5 +1,5 @@
 #define MyAppName "Bananen"
-#define MyAppVersion "0.0.3-alpha"
+#define MyAppVersion "0.1.5-alpha"
 #define MyAppPublisher "Strawmelonjuice Mar"
 #define MyAppURL "https://strawmelonjuice.github.io/bananen/"
 #define MyAppExeName "bananen.exe"
