@@ -56,7 +56,7 @@
                 "changelogfile": {
                     "type": "string",
                     "default": "",
-                    "title": "The changelogfile Schema",
+                    "title": "The relative name of a markdown file to be used as a changelog.",
                     "examples": [
                         "changelog.md"
                     ]
@@ -64,7 +64,7 @@
                 "rollingrelease": {
                     "type": "boolean",
                     "default": false,
-                    "title": "The rollingrelease Schema",
+                    "title": "Is the changelog rolling or does it feature releases?",
                     "examples": [
                         false
                     ]
@@ -72,7 +72,7 @@
                 "customisation": {
                     "type": "object",
                     "default": {},
-                    "title": "The customisation Schema",
+                    "title": "Customisation options",
                     "required": [
                         "log_name",
                         "released_name",
@@ -361,7 +361,7 @@
                             "type": {
                                 "type": "integer",
                                 "default": 0,
-                                "title": "The type Schema",
+                                "title": "What type of change is it? (1=addition,2=update,3=fix,4=removal)",
                                 "examples": [
                                     2
                                 ]
@@ -436,7 +436,7 @@
                                         },
                                         "type": {
                                             "type": "integer",
-                                            "title": "The type Schema",
+                                            "title": "What type of change is it? (1=addition,2=update,3=fix,4=removal)",
                                             "examples": [
                                                 1
                                             ]
