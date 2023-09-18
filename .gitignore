@@ -11,3 +11,5 @@ target/
 
 # Stoopid visual studio
 .vs/
+# STOOPID INTELLIJ
+.idea/

@@ -1,0 +1,38 @@
+{
+  "main": {
+    "bananen_version": "0.1.5-alpha",
+    "bananendata_version": 2
+  },
+  "config": {
+    "changelogfile": "CHANGELOG.MD",
+    "rollingrelease": false
+  },
+  "saved_changes": {
+    "unreleased": [
+      "<span style=\"color: red; background-color: #ffcc00\">BREAKING!</span> **<span style=\"color: #0033cc\">Update</span>**: Changed `bananen.toml` to `bananen.json`"
+    ],
+    "released": [
+      {
+        "name": "v0.0.4-alpha",
+        "changes": [
+          " **<span style=\"color: #0033cc\">Update</span>**: Paths on windows are now using a backslash instead of an / before the file."
+        ]
+      },
+      {
+        "name": "v0.0.3-alpha",
+        "changes": [
+          " **<span style=\"color: #9900cc\">Fix</span>**: Fixed help screen that had a wrong example usage of the 'add' command."
+        ]
+      },
+      {
+        "name": "0.0.3-pre-alpha",
+        "changes": [
+          " **<span style=\"color: #336600\">Addition</span>**: Basic functionality for 'add', 'init' and 'regen' was added.",
+          " **<span style=\"color: #336600\">Addition</span>**: `'dub'` should now also work basically.",
+          " **<span style=\"color: #9900cc\">Fix</span>**: `'dub'` no longer accepts empty releases.",
+          " **<span style=\"color: #0033cc\">Update</span>**: Every change type now has a color."
+        ]
+      }
+    ]
+  }
+}

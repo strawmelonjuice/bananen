@@ -1,30 +1,37 @@
 use inline_colorization::*;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::env;
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
 use std::process;
-
-#[derive(Deserialize)]
-struct BananenSaveData {
+const BANANEN_CONFIG_VERSION: i32 = 2;
+#[derive(Deserialize, Debug, Serialize)]
+struct BananenSaveDatav2 {
     main: BananenSaveDataMain,
     config: BananenConfig,
-    changes_md: BananensavedChanges,
+    saved_changes: BananensavedChanges,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug, Serialize)]
 struct BananenSaveDataMain {
     bananen_version: String,
+    bananendata_version: i32,
 }
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug, Serialize)]
 struct BananenConfig {
     changelogfile: String,
+    rollingrelease: bool,
 }
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug, Serialize)]
 struct BananensavedChanges {
-    unreleased: String,
-    released: String,
+    unreleased: Vec<String>,
+    released: Vec<ReleasedChanges>,
+}
+#[derive(Deserialize, Debug, Serialize, Clone)]
+struct ReleasedChanges {
+    name: String,
+    changes: Vec<String>,
 }
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 fn main() {
@@ -54,7 +61,7 @@ fn main() {
         {style_bold}{color_blue}add{color_reset}{style_reset}     Add new changes to unreleased.
             Usage: `{color_yellow}{me_bin}{color_reset} {color_blue}add{color_reset} <type> <title> {color_black}{bg_white}[--breaking]{color_reset}{bg_reset}`
                 Options:
-                    types: removal, fix, addition, update
+                    types: (r)emoval, (f)ix, (a)ddition, (u)pdate
                     flags:
                     --breaking: Will add a breaking warning to the changelog.
                 Example usage: `{color_yellow}{me_bin}{color_reset} {color_blue}add{color_reset} "Fixed all the things" {color_black}{bg_white}--breaking{color_reset}{bg_reset}`
@@ -82,28 +89,37 @@ fn main() {
             );
             process::exit(0);
         }
-        let clean_save_data = format!(
-            r#"[main]
-bananen_version = "{_bananen_version}"
-
-[config]
-changelogfile = "changelog.md"
-
-[changes_md]
-unreleased= """"""
-released= """""""#
-        );
+        let clean_save_data: BananenSaveDatav2 = BananenSaveDatav2 {
+            main: (BananenSaveDataMain {
+                bananen_version: (_bananen_version.to_string()),
+                bananendata_version: (BANANEN_CONFIG_VERSION),
+            }),
+            config: (BananenConfig {
+                changelogfile: ("changelog.md".to_string()),
+                rollingrelease: (false),
+            }),
+            saved_changes: (BananensavedChanges {
+                unreleased: ([].to_vec()),
+                released: ([].to_vec()),
+            }),
+        };
+        let clean_save_data_md =
+            serde_json::to_string(&clean_save_data).expect("Could not create clean save data.");
         println!("Writing new save data to '{color_cyan}{savefile}{color_reset}'!");
-        to_file(&clean_save_data, &savefile);
+        to_file(&clean_save_data_md, &savefile);
         process::exit(0);
     }
     if !Path::new(&get_save_file_path()).exists() {
+        if Path::new(&return_pathslashfile("bananen.toml")).exists() {
+                println!("{color_red}ERROR:{color_reset} This \"{0}\" is incompatible with this Bananen version, either reinit and manually update it, or use a different bananen version.",&return_pathslashfile("bananen.toml"));
+                process::exit(1);
+            }
         println!(
                 "{color_red}ERROR:{color_reset} No '{color_cyan}{savefile}{color_reset}' found. Use `{color_yellow}{me_bin}{color_reset} {color_blue}init{color_reset}` to create one."
             );
         process::exit(1);
     }
-    let _savedata = load_save_file();
+    let mut _savedata = load_save_file();
     if command == "add" || command == "a" {
         if _a == "" || _b == "" {
             println!(
@@ -157,13 +173,13 @@ released= """""""#
         }
         let unedited_additiontype = &additiontype;
         let additiontype = if additiontype == "removal" {
-            "**<span style=\"color: #ff0000\">Removal</span>**"
+            r#"**<span style="color: #ff0000">Removal</span>**"#
         } else if additiontype == "fix" {
-            "**<span style=\"color: #9900cc\">Fix</span>**"
+            r#"**<span style="color: #9900cc">Fix</span>**"#
         } else if additiontype == "addition" {
-            "**<span style=\"color: #336600\">Addition</span>**"
+            r#"**<span style="color: #336600">Addition</span>**"#
         } else if additiontype == "update" {
-            "**<span style=\"color: #0033cc\">Update</span>**"
+            r#"**<span style="color: #0033cc">Update</span>**"#
         } else {
             &additiontype
         };
@@ -176,42 +192,29 @@ released= """""""#
             return_pathslashfile(&changelogfile)
         );
         let breakingwarn = if _c == "--breaking" {
-            "<span style=\"color: red; background-color: #ffcc00\">BREAKING!</span>"
+            r#"<span style="color: red; background-color: #ffcc00">BREAKING!</span>"#
         } else {
             ""
         };
-        let oldunreleasedchanges: String = _savedata.changes_md.unreleased;
-        let newunreleasedchanges: String =
-            format!("- {breakingwarn} {additiontype}: {_b}\n{oldunreleasedchanges}");
-        let releasedchanges: String = _savedata.changes_md.released;
-        let new_md: String = format!(
-            "# Changelog\n\n## Unreleased\n\n{newunreleasedchanges}\n\n\n{releasedchanges}\n\n\n<hr>\n\nThis file was auto generated by [<span style=\"background-color: #24273a; color: #ffcc00\">Bananen! 🍌</span>](https://github.com/strawmelonjuice/bananen/) `v{0}`.",
-            _savedata.main.bananen_version
+        let mut newchange = Vec::new();
+        newchange.push(format!("{breakingwarn} {additiontype}: {_b}"));
+        _savedata.saved_changes.unreleased.append(&mut newchange);
+        let new_savedata_json =
+            serde_json::to_string_pretty(&_savedata).expect("Error: Could not save data.");
+        to_file(
+            &generate_markdown_log(_savedata.saved_changes),
+            return_pathslashfile(&changelogfile).as_str(),
         );
-        let new_savedata: String = format!(
-            r#"[main]
-bananen_version = "{_bananen_version}"
-
-[config]
-changelogfile = "{changelogfile}"
-
-[changes_md]
-unreleased= """{newunreleasedchanges}"""
-released= """{releasedchanges}""""#
-        );
-        to_file(&new_md, return_pathslashfile(&changelogfile).as_str());
-        to_file(&new_savedata, &savefile);
+        to_file(&new_savedata_json, &savefile);
         process::exit(0);
     }
+    check_save_data_version();
     if command == "regen" || command == "r" {
         let changelogfile = format!("{}", _savedata.config.changelogfile);
-        let md: String = format!(
-            "# Changelog\n\n## Unreleased\n\n{0}\n\n\n{1}\n\n\n<hr>\n\nThis file was auto generated by [<span style=\"background-color: #24273a; color: #ffcc00\">Bananen! 🍌</span>](https://github.com/strawmelonjuice/bananen/) `v{2}`.",
-            _savedata.changes_md.unreleased,
-            _savedata.changes_md.released,
-            _savedata.main.bananen_version
+        to_file(
+            &generate_markdown_log(_savedata.saved_changes),
+            return_pathslashfile(&changelogfile).as_str(),
         );
-        to_file(&md, return_pathslashfile(&changelogfile).as_str());
         println!(
             "{color_green}Regenerated {color_reset}'{0}'!",
             return_pathslashfile(&changelogfile)
@@ -225,7 +228,7 @@ released= """{releasedchanges}""""#
             );
             process::exit(1);
         }
-        if _savedata.changes_md.unreleased == "" {
+        if _savedata.saved_changes.unreleased.is_empty() {
             println!(
                 "{color_red}ERROR:{color_reset} No release changes found for this {color_blue}dub{color_reset}. Cannot log a release without changes!"
             );
@@ -238,27 +241,21 @@ released= """{releasedchanges}""""#
             releasename,
             return_pathslashfile(&changelogfile)
         );
-        let newreleasedchanges: String = format!(
-            "## {releasename}\n\n{0}\n\n{1}",
-            _savedata.changes_md.unreleased, _savedata.changes_md.released
+        let mut newreleases: Vec<ReleasedChanges> = [ReleasedChanges {
+            name: (releasename),
+            changes: (_savedata.saved_changes.unreleased),
+        }]
+        .to_vec();
+        _savedata.saved_changes.unreleased = [].to_vec();
+        newreleases.append(&mut _savedata.saved_changes.released);
+        _savedata.saved_changes.released = newreleases;
+        let new_savedata_json =
+            serde_json::to_string_pretty(&_savedata).expect("Error: Could not save data.");
+        to_file(
+            &generate_markdown_log(_savedata.saved_changes),
+            return_pathslashfile(&changelogfile).as_str(),
         );
-        let new_md: String = format!(
-            "# Changelog\n\n## Unreleased\n\n{newreleasedchanges}\n\n\n<hr>\n\nThis file was auto generated by [<span style=\"background-color: #24273a; color: #ffcc00\">Bananen! 🍌</span>](https://github.com/strawmelonjuice/bananen/) `v{0}`.",
-            _savedata.main.bananen_version
-        );
-        let new_savedata: String = format!(
-            r#"[main]
-bananen_version = "{_bananen_version}"
-
-[config]
-changelogfile = "{changelogfile}"
-
-[changes_md]
-unreleased= """"""
-released= """{newreleasedchanges}""""#
-        );
-        to_file(&new_md, return_pathslashfile(&changelogfile).as_str());
-        to_file(&new_savedata, &savefile);
+        to_file(&new_savedata_json, &savefile);
         process::exit(0);
     }
     println!(
@@ -286,25 +283,81 @@ fn from_file(file: &str) -> String {
     o.read_to_string(&mut contents).expect(&expectationerror);
     return contents;
 }
-fn load_save_file() -> BananenSaveData {
+fn load_save_file() -> BananenSaveDatav2 {
     let savefile = &get_save_file_path();
     let unparsed_confi = from_file(savefile);
     let unparsed_config: &str = unparsed_confi.as_str();
     let me_bin = env::args().nth(0).unwrap_or("unknown".to_string());
     let expectationerror = format!("{color_red}ERROR:{color_reset} Expected I could understand '{color_cyan}{savefile}{color_reset}'!\nIf you don't mind resetting everything bananen has done, please reinitialise it with:\n`{color_yellow}{me_bin}{color_reset} {color_blue}init{color_reset} {color_black}{bg_white}--proceed{color_reset}{bg_reset}`.");
-    let parsedsavefile: BananenSaveData = toml::from_str(unparsed_config).expect(&expectationerror);
+    let parsedsavefile: BananenSaveDatav2 =
+        serde_json::from_str(unparsed_config).expect(&expectationerror);
     return parsedsavefile;
 }
 fn get_save_file_path() -> String {
-    return return_pathslashfile("bananen.toml");
+    return return_pathslashfile("bananen.json");
 }
 fn return_pathslashfile(file: &str) -> String {
     let expectationerror =
         format!("{color_red}ERROR:{color_reset} Expected a valid working directory.");
     let cd = env::current_dir().expect(&expectationerror);
     let sep = if cfg!(windows) { "\\" } else { "/" };
-    let filed = if cfg!(windows) { file.replace("/", "\\") } else {file.replace("\\", "/")};
+    let filed = if cfg!(windows) {
+        file.replace("/", "\\")
+    } else {
+        file.replace("\\", "/")
+    };
     let returns: String = format!("{0}{sep}{1}", cd.display(), filed);
     return returns;
 }
 
+fn check_save_data_version() {
+    let savefile = &get_save_file_path();
+    let _savedata = load_save_file();
+    if (_savedata.main.bananendata_version != BANANEN_CONFIG_VERSION)
+        || (Path::new(&return_pathslashfile("bananen.toml")).exists())
+    {
+        println!("{color_red}ERROR:{color_reset} This \"{0}\" is incompatible with this Bananen version, either reinit and manually update it, or use a different bananen version.",savefile);
+        process::exit(1);
+    }
+}
+fn generate_markdown_log(changes: BananensavedChanges) -> std::string::String {
+    let localsavedata = load_save_file();
+    let mut unreleasedchanges_md: String = "No unreleased changes.".to_string();
+    for change in changes.unreleased {
+        if unreleasedchanges_md == "No unreleased changes." {unreleasedchanges_md = "".to_string()};
+        unreleasedchanges_md = format!("- {change}\n {unreleasedchanges_md}");
+    }
+    let mut releasedchanges_md: String = "No releases yet.".to_string();
+    for release in changes.released {
+        if releasedchanges_md == "No releases yet." {releasedchanges_md = "".to_string()};
+        let mut release_md: String = "".to_string();
+        for change in &release.changes {
+            release_md = format!("- {change}\n {release_md}");
+        }
+        release_md = format!(
+            r#"
+### {0}
+{1}"#,
+            release.name, release_md
+        );
+        releasedchanges_md = format!("{1}\n\n{0}", release_md, releasedchanges_md)
+    }
+    let md: String = format!(
+        r#"# Changelog
+
+
+## Unreleased
+            
+{unreleasedchanges_md}
+
+## Releases
+
+{releasedchanges_md}
+
+<hr>
+            
+This file was auto generated by [<span style="background-color: #24273a; color: #ffcc00">Bananen! 🍌</span>](https://github.com/strawmelonjuice/bananen/) `v{0}`."#,
+        localsavedata.main.bananen_version
+    );
+    return md;
+}
