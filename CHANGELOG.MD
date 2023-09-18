@@ -3,7 +3,9 @@
 
 ## Unreleased
             
-- <span style="color: red; background-color: #ffcc00">BREAKING!</span> **<span style="color: #0033cc">Update</span>**: Changed `bananen.toml` to `bananen.json`
+-  **<span style="color: #336600">Addition</span>**: Now features a (poorly implemented) JSON-schema. <https://github.com/strawmelonjuice/bananen/blob/main/json-schemas/v3.json>
+ -  **<span style="color: #336600">Addition</span>**: Add rolling release option.
+ - <span style="color: red; background-color: #ffcc00">BREAKING!</span> **<span style="color: #0033cc">Update</span>**: Changed `bananen.toml` to `bananen.json`
  
 
 ## Releases

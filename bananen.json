@@ -1,36 +1,97 @@
-{
+{"$schema": "https://cdn.jsdelivr.net/gh/strawmelonjuice/bananen@latest/json-schemas/v3.json",
   "main": {
     "bananen_version": "0.1.5-alpha",
-    "bananendata_version": 2
+    "bananendata_version": 3
   },
   "config": {
     "changelogfile": "CHANGELOG.MD",
-    "rollingrelease": false
+    "rollingrelease": false,
+    "customisation": {
+      "log_name": "Changelog",
+      "released_name": "Released changes",
+      "unreleased_name": "Unreleased changes",
+      "changetypes": {
+        "addition": {
+          "translation": "Addition",
+          "color": "#336600"
+        },
+        "removal": {
+          "translation": "Removal",
+          "color": "#ff0000"
+        },
+        "update": {
+          "translation": "Update",
+          "color": "#0033cc"
+        },
+        "fix": {
+          "translation": "Fix",
+          "color": "#9900cc"
+        }
+      }
+    }
   },
   "saved_changes": {
     "unreleased": [
-      "<span style=\"color: red; background-color: #ffcc00\">BREAKING!</span> **<span style=\"color: #0033cc\">Update</span>**: Changed `bananen.toml` to `bananen.json`"
+      {
+        "contents": "Changed `bananen.toml` to `bananen.json`",
+        "type": 2,
+        "breaking": true
+      },
+      {
+        "contents": "Add rolling release option.",
+        "type": 1,
+        "breaking": false
+      },
+      {
+        "contents": "Now features a (poorly implemented) JSON-schema. <https://github.com/strawmelonjuice/bananen/blob/main/json-schemas/v3.json>",
+        "type": 1,
+        "breaking": false
+      }
     ],
     "released": [
       {
         "name": "v0.0.4-alpha",
         "changes": [
-          " **<span style=\"color: #0033cc\">Update</span>**: Paths on windows are now using a backslash instead of an / before the file."
+          {
+            "contents": "Paths on windows are now using a backslash instead of an / before the file.",
+            "type": 2,
+            "breaking": false
+          }
         ]
       },
       {
         "name": "v0.0.3-alpha",
         "changes": [
-          " **<span style=\"color: #9900cc\">Fix</span>**: Fixed help screen that had a wrong example usage of the 'add' command."
+          {
+            "contents": "Fixed help screen that had a wrong example usage of the 'add' command.",
+            "type": 3,
+            "breaking": false
+          }
         ]
       },
       {
         "name": "0.0.3-pre-alpha",
         "changes": [
-          " **<span style=\"color: #336600\">Addition</span>**: Basic functionality for 'add', 'init' and 'regen' was added.",
-          " **<span style=\"color: #336600\">Addition</span>**: `'dub'` should now also work basically.",
-          " **<span style=\"color: #9900cc\">Fix</span>**: `'dub'` no longer accepts empty releases.",
-          " **<span style=\"color: #0033cc\">Update</span>**: Every change type now has a color."
+          {
+            "contents": "Basic functionality for 'add', 'init' and 'regen' was added.",
+            "type": 1,
+            "breaking": false
+          },
+          {
+            "contents": "`'dub'` should now also work basically.",
+            "type": 1,
+            "breaking": false
+          },
+          {
+            "contents": "`'dub'` no longer accepts empty releases.",
+            "type": 3,
+            "breaking": false
+          },
+          {
+            "contents": "Every change type now has a color.",
+            "type": 2,
+            "breaking": false
+          }
         ]
       }
     ]
