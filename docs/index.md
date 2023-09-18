@@ -1,6 +1,6 @@
 - [Docs -&gt; Getting started](https://strawmelonjuice.com/?p=projects/bananen/docs)
 - [Get bananen](https://strawmelonjuice.com/?p=projects/bananen/get)
-- 
+- [GitHub](https://github.com/strawmelonjuice/bananen/)
 
 ## Show me
 

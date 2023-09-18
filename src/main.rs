@@ -226,7 +226,7 @@ fn main() {
         } else {
             &additiontype
         };
-        if additiontype == "rem" || additiontype == "del" || additiontype == "f" {
+        if additiontype == "rem" || additiontype == "del" || additiontype == "r" {
             println!(
                 "(Accepted short `{0}` as `{1}`)",
                 additiontype,
