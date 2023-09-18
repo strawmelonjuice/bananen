@@ -4,9 +4,9 @@
 ## Unreleased
             
 -  **<span style="color: #336600">Addition</span>**: Now features a (poorly implemented) JSON-schema. <https://github.com/strawmelonjuice/bananen/blob/main/json-schemas/v3.json>
- -  **<span style="color: #336600">Addition</span>**: Add rolling release option.
- - <span style="color: red; background-color: #ffcc00">BREAKING!</span> **<span style="color: #0033cc">Update</span>**: Changed `bananen.toml` to `bananen.json`
- 
+-  **<span style="color: #336600">Addition</span>**: Add rolling release option.
+- <span style="color: red; background-color: #ffcc00">BREAKING!</span> **<span style="color: #0033cc">Update</span>**: Changed `bananen.toml` to `bananen.json`
+
 
 ## Releases
 
@@ -15,20 +15,20 @@
 
 ### v0.0.4-alpha
 -  **<span style="color: #0033cc">Update</span>**: Paths on windows are now using a backslash instead of an / before the file.
- 
+
 
 
 ### v0.0.3-alpha
 -  **<span style="color: #9900cc">Fix</span>**: Fixed help screen that had a wrong example usage of the 'add' command.
- 
+
 
 
 ### 0.0.3-pre-alpha
 -  **<span style="color: #0033cc">Update</span>**: Every change type now has a color.
- -  **<span style="color: #9900cc">Fix</span>**: `'dub'` no longer accepts empty releases.
- -  **<span style="color: #336600">Addition</span>**: `'dub'` should now also work basically.
- -  **<span style="color: #336600">Addition</span>**: Basic functionality for 'add', 'init' and 'regen' was added.
- 
+-  **<span style="color: #9900cc">Fix</span>**: `'dub'` no longer accepts empty releases.
+-  **<span style="color: #336600">Addition</span>**: `'dub'` should now also work basically.
+-  **<span style="color: #336600">Addition</span>**: Basic functionality for 'add', 'init' and 'regen' was added.
+
 
 <hr>
             
