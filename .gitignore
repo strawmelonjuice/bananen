@@ -13,3 +13,5 @@ target/
 .vs/
 # STOOPID INTELLIJ
 .idea/
+# Get out
+windows.iss
