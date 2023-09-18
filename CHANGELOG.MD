@@ -3,18 +3,22 @@
 
 ## Unreleased
             
--  **<span style="color: #336600">Addition</span>**: Now features a (poorly implemented) JSON-schema. <https://github.com/strawmelonjuice/bananen/blob/main/json-schemas/v3.json>
--  **<span style="color: #336600">Addition</span>**: Add rolling release option.
-- <span style="color: red; background-color: #ffcc00">BREAKING!</span> **<span style="color: #0033cc">Update</span>**: Changed `bananen.toml` to `bananen.json`
-
+No unreleased changes.
 
 ## Releases
 
 
 
 
+### 0.1.5-alpha
+-  **<span style="color: #336600">Addition</span>**: Now features a (poorly implemented) JSON-schema. <https://github.com/strawmelonjuice/bananen/blob/main/json-schemas/v3.json>
+-  **<span style="color: #336600">Addition</span>**: Add rolling release option.
+- <span style="color: red; background-color: #ffcc00">BREAKING!</span> **<span style="color: #0033cc">Update</span>**: Changed `bananen.toml` to `bananen.json`
+
+
+
 ### v0.0.4-alpha
--  **<span style="color: #0033cc">Update</span>**: Paths on windows are now using a backslash instead of an / before the file.
+-  **<span style="color: #0033cc">Update</span>**: Paths on windows are now using a backslash instead of a / before the file.
 
 
 

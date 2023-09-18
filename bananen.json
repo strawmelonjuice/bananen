@@ -31,29 +31,33 @@
     }
   },
   "saved_changes": {
-    "unreleased": [
-      {
-        "contents": "Changed `bananen.toml` to `bananen.json`",
-        "type": 2,
-        "breaking": true
-      },
-      {
-        "contents": "Add rolling release option.",
-        "type": 1,
-        "breaking": false
-      },
-      {
-        "contents": "Now features a (poorly implemented) JSON-schema. <https://github.com/strawmelonjuice/bananen/blob/main/json-schemas/v3.json>",
-        "type": 1,
-        "breaking": false
-      }
-    ],
+    "unreleased": [],
     "released": [
+      {
+        "name": "0.1.5-alpha",
+        "changes": [
+          {
+            "contents": "Changed `bananen.toml` to `bananen.json`",
+            "type": 2,
+            "breaking": true
+          },
+          {
+            "contents": "Add rolling release option.",
+            "type": 1,
+            "breaking": false
+          },
+          {
+            "contents": "Now features a (poorly implemented) JSON-schema. <https://github.com/strawmelonjuice/bananen/blob/main/json-schemas/v3.json>",
+            "type": 1,
+            "breaking": false
+          }
+        ]
+      },
       {
         "name": "v0.0.4-alpha",
         "changes": [
           {
-            "contents": "Paths on windows are now using a backslash instead of an / before the file.",
+            "contents": "Paths on windows are now using a backslash instead of a / before the file.",
             "type": 2,
             "breaking": false
           }
