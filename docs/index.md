@@ -21,4 +21,4 @@ Multiple reasons actually, to name some:
 
 <hr>
 
-According to Wakatime, I have spent [![wakatime](https://wakatime.com/badge/user/baaa1107-817b-4529-afba-75b3f1efac88/project/eff67b5b-af9a-41cd-9909-7b99daaf19a8.svg?style=social)](https://wakatime.com/badge/user/baaa1107-817b-4529-afba-75b3f1efac88/project/eff67b5b-af9a-41cd-9909-7b99daaf19a8) on this project.
+According to Wakatime, I have spent [![wakatime](https://wakatime.com/badge/github/strawmelonjuice/bananen.svg?style=social)](https://wakatime.com/badge/github/strawmelonjuice/bananen) on this project.

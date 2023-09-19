@@ -31,7 +31,18 @@
     }
   },
   "saved_changes": {
-    "unreleased": [],
+    "unreleased": [
+      {
+        "contents": "'log_name', 'released_name' and 'unreleased_name' are now honoured.",
+        "type": 3,
+        "breaking": false
+      },
+      {
+        "contents": "Now correctly checking data versions.",
+        "type": 3,
+        "breaking": false
+      }
+    ],
     "released": [
       {
         "name": "0.1.5-alpha",
