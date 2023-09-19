@@ -18,3 +18,7 @@ Multiple reasons actually, to name some:
 - I am Dutch (<span style="background-color: #24273a; color: #ffcc00">bananen</span> means <span style="background-color: black; color: #fffc00">bananas</span>)
 - <span style="background-color: #24273a; color: #ffcc00">Bananen</span> is indeed funny!
 - Because <span style="background-color: #24273a; color: #ffcc00">bananen</span> is so funny, logging changes will give me giggles everytime, so I (an ADHD head) won't constantly forget logging changes is a thing.
+
+<hr>
+
+According to Wakatime, I have spent [![wakatime](https://wakatime.com/badge/user/baaa1107-817b-4529-afba-75b3f1efac88/project/eff67b5b-af9a-41cd-9909-7b99daaf19a8.svg?style=social)](https://wakatime.com/badge/user/baaa1107-817b-4529-afba-75b3f1efac88/project/eff67b5b-af9a-41cd-9909-7b99daaf19a8) on this project.
