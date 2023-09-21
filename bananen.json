@@ -31,19 +31,28 @@
     }
   },
   "saved_changes": {
-    "unreleased": [
-      {
-        "contents": "'log_name', 'released_name' and 'unreleased_name' are now honoured.",
-        "type": 3,
-        "breaking": false
-      },
-      {
-        "contents": "Now correctly checking data versions.",
-        "type": 3,
-        "breaking": false
-      }
-    ],
+    "unreleased": [],
     "released": [
+      {
+        "name": "0.1.6-alpha",
+        "changes": [
+          {
+            "contents": "'log_name', 'released_name' and 'unreleased_name' are now honoured.",
+            "type": 3,
+            "breaking": false
+          },
+          {
+            "contents": "Now correctly checking data versions.",
+            "type": 3,
+            "breaking": false
+          },
+          {
+            "contents": "Testing run on arm",
+            "type": 1,
+            "breaking": false
+          }
+        ]
+      },
       {
         "name": "0.1.5-alpha",
         "changes": [

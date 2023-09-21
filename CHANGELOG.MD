@@ -4,12 +4,16 @@
 
 ## Unreleased changes
             
--  **<span style="color: #9900cc">Fix</span>**: Now correctly checking data versions.
--  **<span style="color: #9900cc">Fix</span>**: 'log_name', 'released_name' and 'unreleased_name' are now honoured.
-
+No unreleased changes.
 
 ## Released changes
 
+
+
+### 0.1.6-alpha
+-  **<span style="color: #336600">Addition</span>**: Testing run on arm
+-  **<span style="color: #9900cc">Fix</span>**: Now correctly checking data versions.
+-  **<span style="color: #9900cc">Fix</span>**: 'log_name', 'released_name' and 'unreleased_name' are now honoured.
 
 
 ### 0.1.5-alpha
