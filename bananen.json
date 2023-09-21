@@ -1,6 +1,5 @@
-{"$schema": "https://cdn.jsdelivr.net/gh/strawmelonjuice/bananen@latest/json-schemas/v3.json",
-  "main": {
-    "bananen_version": "0.1.5-alpha",
+{"main": {
+    "bananen_version": "0.1.6-alpha",
     "bananendata_version": 3
   },
   "config": {
@@ -31,7 +30,18 @@
     }
   },
   "saved_changes": {
-    "unreleased": [],
+    "unreleased": [
+      {
+        "contents": "Version staying on the initialisation value.",
+        "type": 3,
+        "breaking": false
+      },
+      {
+        "contents": "Made the json scheme injector a bit more foolproof.",
+        "type": 2,
+        "breaking": false
+      }
+    ],
     "released": [
       {
         "name": "0.1.6-alpha",
