@@ -11,7 +11,7 @@ No unreleased changes.
 
 
 ### 0.1.6-alpha
--  **<span style="color: #336600">Addition</span>**: Testing run on arm
+-  **<span style="color: #0033cc">Update</span>**: [SUCCES] Testing run on ARM64 (Raspberry Pi 3b rev 2) ✅
 -  **<span style="color: #9900cc">Fix</span>**: Now correctly checking data versions.
 -  **<span style="color: #9900cc">Fix</span>**: 'log_name', 'released_name' and 'unreleased_name' are now honoured.
 

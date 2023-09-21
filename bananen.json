@@ -47,8 +47,8 @@
             "breaking": false
           },
           {
-            "contents": "Testing run on arm",
-            "type": 1,
+            "contents": "[SUCCES] Testing run on ARM64 (Raspberry Pi 3b rev 2) ✅",
+            "type": 2,
             "breaking": false
           }
         ]
