@@ -1,6 +1,6 @@
 {
   "main": {
-    "bananen_version": "0.1.7-alpha",
+    "bananen_version": "0.1.7-beta",
     "bananendata_version": 3
   },
   "config": {
@@ -31,29 +31,33 @@
     }
   },
   "saved_changes": {
-    "unreleased": [
-      {
-        "contents": "Version staying on the initialisation value.",
-        "type": 3,
-        "breaking": false
-      },
-      {
-        "contents": "Made the json scheme injector a bit more foolproof.",
-        "type": 2,
-        "breaking": false
-      },
-      {
-        "contents": "Add `--minimal` mode.",
-        "type": 1,
-        "breaking": false
-      },
-      {
-        "contents": "Add `--minimal` mode",
-        "type": 1,
-        "breaking": false
-      }
-    ],
+    "unreleased": [],
     "released": [
+      {
+        "name": "v0.1.7-beta",
+        "changes": [
+          {
+            "contents": "Version staying on the initialisation value.",
+            "type": 3,
+            "breaking": false
+          },
+          {
+            "contents": "Made the json scheme injector a bit more foolproof.",
+            "type": 2,
+            "breaking": false
+          },
+          {
+            "contents": "Add `--minimal` mode.",
+            "type": 1,
+            "breaking": false
+          },
+          {
+            "contents": "Add `--minimal` mode",
+            "type": 1,
+            "breaking": false
+          }
+        ]
+      },
       {
         "name": "0.1.6-alpha",
         "changes": [

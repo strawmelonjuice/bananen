@@ -6,8 +6,6 @@ edition = "2021"
 repository = "https://github.com/strawmelonjuice/bananen/"
 license = "GPL-3.0"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 inline_colorization = "0.1.5"
 serde = { version = "1.0.104", features = ["derive"] }

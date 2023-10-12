@@ -4,14 +4,17 @@
 
 ## Unreleased changes
             
+No unreleased changes.
+
+## Released changes
+
+
+
+### v0.1.7-beta
 -  **<span style="color: #336600">Addition</span>**: Add `--minimal` mode
 -  **<span style="color: #336600">Addition</span>**: Add `--minimal` mode.
 -  **<span style="color: #0033cc">Update</span>**: Made the json scheme injector a bit more foolproof.
 -  **<span style="color: #9900cc">Fix</span>**: Version staying on the initialisation value.
-
-
-## Released changes
-
 
 
 ### 0.1.6-alpha
