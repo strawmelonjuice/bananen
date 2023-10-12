@@ -1,5 +1,5 @@
 #define MyAppName "Bananen"
-#define MyAppVersion "0.1.7-beta"
+#define MyAppVersion "0.1.7-betas"
 #define MyAppPublisher "Strawmelonjuice Mar"
 #define MyAppURL "https://strawmelonjuice.github.io/bananen/"
 #define MyAppExeName "bananen.exe"
@@ -22,7 +22,7 @@ LicenseFile=.\LICENCE.txt
 ; Remove the following line to run in administrative install mode (install for all users.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=
-OutputBaseFilename=BananenSetup_Win
+OutputBaseFilename=bananen_{#MyAppVersion}_x86_64-windows.exe
 OutputDir=./target/winstaller
 Compression=lzma
 SolidCompression=yes
