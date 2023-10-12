@@ -74,28 +74,61 @@ struct Change {
 }
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
+
+fn arpl(n: u8) -> usize {
+    return if n < 1 {
+        n.into()
+    } else if env::args().nth(1).unwrap_or("unknown".to_string()).starts_with("-") && (env::args().nth(1).unwrap_or("unknown".to_string()) != "--help")  && (env::args().nth(1).unwrap_or("unknown".to_string()) != "-h") {
+        (n + 1).into()
+    } else {
+        n.into()
+    };
+}
+fn printer(c: f32, f: String) {
+    if env::args().nth(1).unwrap_or("unknown".to_string()).starts_with("--min") || env::args().nth(1).unwrap_or("unknown".to_string()).starts_with("-m") {
+        if c != 0.0 {
+            print!("{}", c);
+        }
+        return;
+    } else {
+        if env::args().nth(1).unwrap_or("unknown".to_string()) == "--dump-codes" {
+            print!("c: {0}    f: {1}\n", c, f);
+        } else {
+        print!("{}\n", f);
+    }
+        return;
+    }
+}
 fn main() {
     let me_bin = env::args().nth(0).unwrap_or("unknown".to_string());
-    let command = env::args().nth(1).unwrap_or("none".to_string());
-    println!("{style_bold}{color_yellow}Bananen! 🍌{color_reset} v{VERSION}\n{style_reset}By {color_red}Straw{color_green}melon{color_yellow}juice {color_magenta}Mar{color_reset}.");
-    if command == "none" {
-        println!(
-            "{color_red}ERROR:{color_reset} No command specified. Use `{color_yellow}bananen{color_reset} {color_blue}help{color_reset}` for help."
-        );
-        process::exit(1);
+    let _kivimode: bool = if env::args().nth(1).unwrap_or("unknown".to_string()).starts_with("--min") {
+        true
     } else {
-        // println!("Command used: {}", command);
+        false
+    };
+    let command = env::args()
+        .nth(arpl(1))
+        .unwrap_or("none".to_string());
+    printer( 0.0, format!("{style_bold}{color_yellow}Bananen! 🍌{color_reset} v{VERSION}\n{style_reset}By {color_red}Straw{color_green}melon{color_yellow}juice {color_magenta}Mar{color_reset}."));
+    if command == "none" {
+        printer( 1.1, format!(
+            "{color_red}ERROR:{color_reset} No command specified. Use `{color_yellow}bananen{color_reset} {color_blue}help{color_reset}` for help."
+        ));
+        process::exit(1);
     }
     let _bananen_version: &str = env!("CARGO_PKG_VERSION");
-    let _a: String = env::args().nth(2).unwrap_or("".to_string());
-    let _b: String = env::args().nth(3).unwrap_or("".to_string());
-    let _c: String = env::args().nth(4).unwrap_or("".to_string());
-    let _d: String = env::args().nth(5).unwrap_or("".to_string());
+    let _a: String = env::args().nth(arpl(2)).unwrap_or("".to_string());
+    let _b: String = env::args().nth(arpl(3)).unwrap_or("".to_string());
+    let _c: String = env::args().nth(arpl(4)).unwrap_or("".to_string());
+    let _d: String = env::args().nth(arpl(5)).unwrap_or("".to_string());
     let savefile: &str = &get_save_file_path();
+
     if command == "help" || command == "h" || command == "--help" || command == "-h" {
         if _a == "" || _a == "1" {
-            println!(
-                r#"
+            printer(
+                0.0,
+                format!(
+                    r#"
     {color_yellow}Bananen{color_reset} help -- page {style_underline}1{style_reset} of 1.
         {style_bold}{color_blue}add{color_reset}{style_reset}     Add new changes to unreleased.
             Usage: `{color_yellow}{me_bin}{color_reset} {color_blue}add{color_reset} <type> <title> {color_black}{bg_white}[--breaking]{color_reset}{bg_reset}`
@@ -113,19 +146,27 @@ fn main() {
 
         {style_bold}{color_blue}init{color_reset}{style_reset}    Initialise the current folder with a brand new '{color_cyan}{savefile}{color_reset}'.
 
-        {style_bold}{color_blue}help{color_reset}{style_reset}    Display this page."#
+        {style_bold}{color_blue}help{color_reset}{style_reset}    Display this page. Use with version to display version.
+        
+        Note: Using the --minimal tag (in first place ONLY), you'll only get floating point numbers as output, however Bananen will function as usual."#
+                ),
             );
             process::exit(0);
+        };
+
+        if _a == "v" || _a == "version" || _a == "ver" {
+            print!("{}\n", _bananen_version);
+            process::exit(0)
         }
     }
     if command == "init" || command == "i" {
         if Path::new(&get_save_file_path()).exists() && _a != "--proceed" {
-            println!(
-                r#"
+            printer(2.1, format!(
+                    r#"
     {color_red}Warning:{color_reset}
     '{color_cyan}{savefile}{color_reset}' already exists.
     Use with {color_black}{bg_white}--proceed{color_reset}{bg_reset} if you're willing to overwrite it."#
-            );
+                ));
             process::exit(0);
         }
         let clean_save_data: BananenSaveDatav3 = BananenSaveDatav3 {
@@ -167,18 +208,18 @@ fn main() {
         };
         let clean_save_data_md =
             serde_json::to_string(&clean_save_data).expect("Could not create clean save data.");
-        println!("Writing new save data to '{color_cyan}{savefile}{color_reset}'!");
+        printer(0.2,format!("Writing new save data to '{color_cyan}{savefile}{color_reset}'!"));
         to_savefile(clean_save_data_md.to_string());
         process::exit(0);
     }
     if !Path::new(&get_save_file_path()).exists() {
         if Path::new(&return_pathslashfile("bananen.toml")).exists() {
-            println!("{color_red}ERROR:{color_reset} This \"{0}\" is incompatible with this Bananen version, either reinit and manually update it, or use a different bananen version.",&return_pathslashfile("bananen.toml"));
+            printer(1.2,format!("{color_red}ERROR:{color_reset} This \"{0}\" is incompatible with this Bananen version, either reinit and manually update it, or use a different bananen version.",&return_pathslashfile("bananen.toml")));
             process::exit(1);
         }
-        println!(
+        printer(1.3, format!(
                 "{color_red}ERROR:{color_reset} No '{color_cyan}{savefile}{color_reset}' found. Use `{color_yellow}{me_bin}{color_reset} {color_blue}init{color_reset}` to create one."
-            );
+            ));
         process::exit(1);
     }
     check_save_data_version();
@@ -186,14 +227,14 @@ fn main() {
     _savedata.main.bananen_version = VERSION.to_string();
     if command == "add" || command == "a" {
         if _a == "" || _b == "" {
-            println!(
+            printer(1.4,format!(
                 "{color_red}ERROR:{color_reset} No argument found for this {color_blue}add{color_reset}ition what do I need to add?"
-            );
+            ));
             process::exit(1);
         }
         let additiontype: String = _a.clone();
         if additiontype == "add" || additiontype == "a" {
-            println!(
+            printer(0.0, format!(
                 "(Accepted short `{0}` as `{1}`)",
                 additiontype,
                 _savedata
@@ -202,7 +243,7 @@ fn main() {
                     .changetypes
                     .addition
                     .translation
-            );
+            ));
         }
         let additiontype = if additiontype == "add" || additiontype == "a" {
             "addition"
@@ -210,7 +251,7 @@ fn main() {
             &additiontype
         };
         if additiontype == "up" || additiontype == "u" {
-            println!(
+            printer(0.0,format!(
                 "(Accepted short `{0}` as `{1}`)",
                 additiontype,
                 _savedata
@@ -219,7 +260,7 @@ fn main() {
                     .changetypes
                     .update
                     .translation
-            );
+            ));
         }
         let additiontype = if additiontype == "up" || additiontype == "u" {
             "update"
@@ -227,10 +268,10 @@ fn main() {
             &additiontype
         };
         if additiontype == "solve" || additiontype == "f" {
-            println!(
+            printer(0.0, format!(
                 "(Accepted short `{0}` as `{1}`)",
                 additiontype, _savedata.config.customisation.changetypes.fix.translation
-            );
+            ));
         }
         let additiontype = if additiontype == "solve" || additiontype == "f" {
             "fix"
@@ -238,7 +279,7 @@ fn main() {
             &additiontype
         };
         if additiontype == "rem" || additiontype == "del" || additiontype == "r" {
-            println!(
+            printer(0.0, format!(
                 "(Accepted short `{0}` as `{1}`)",
                 additiontype,
                 _savedata
@@ -247,7 +288,7 @@ fn main() {
                     .changetypes
                     .removal
                     .translation
-            );
+            ));
         }
         let additiontype = if additiontype == "rem" || additiontype == "del" || additiontype == "f"
         {
@@ -260,9 +301,9 @@ fn main() {
             || additiontype == "addition"
             || additiontype == "update")
         {
-            println!(
+            printer(1.4,format!(
                 "{color_red}ERROR:{color_reset} Incorrect type: `{additiontype}`! What kinda {color_blue}add{color_reset}ition is this?"
-            );
+            ));
             process::exit(1);
         }
         let unedited_additiontype = &additiontype;
@@ -277,12 +318,12 @@ fn main() {
         };
         let changelogfile = format!("{}", _savedata.config.changelogfile);
 
-        println!(
+        printer(0.1,format!(
             "{color_green}{0}{color_reset}: '{1}' --> unreleased@\"{2}\"",
             unedited_additiontype,
             _b,
             return_pathslashfile(&changelogfile)
-        );
+        ));
         let xychange: Change = Change {
             contents: (_b),
             r#type: (additiontype),
@@ -306,32 +347,32 @@ fn main() {
             &generate_markdown_log(_savedata.saved_changes),
             return_pathslashfile(&changelogfile).as_str(),
         );
-        println!(
+        printer(0.2,format!(
             "{color_green}Regenerated {color_reset}'{0}'!",
             return_pathslashfile(&changelogfile)
-        );
+        ));
         process::exit(0);
     }
     if command == "dub" || command == "d" || command == "push" || command == "bump" {
         if _a == "" {
-            println!(
+            printer(1.5,format!(
                 "{color_red}ERROR:{color_reset} No release name found for this {color_blue}dub{color_reset}. Cannot log an unnamed release!"
-            );
+            ));
             process::exit(1);
         }
         if _savedata.saved_changes.unreleased.is_empty() {
-            println!(
+            printer(2.2,format!(
                 "{color_red}ERROR:{color_reset} No release changes found for this {color_blue}dub{color_reset}. Cannot log a release without changes!"
-            );
+            ));
             process::exit(1);
         }
         let releasename: String = _a.clone();
         let changelogfile = format!("{}", _savedata.config.changelogfile);
-        println!(
+        printer(0.3, format!(
             "unreleased@'{1}' --> {color_green}{0}{color_reset}@\"{1}\"",
             releasename,
             return_pathslashfile(&changelogfile)
-        );
+        ));
         let mut newreleases: Vec<ReleasedChanges> = [ReleasedChanges {
             name: (releasename),
             changes: (_savedata.saved_changes.unreleased),
@@ -349,15 +390,15 @@ fn main() {
         to_savefile(new_savedata_json.to_string());
         process::exit(0);
     }
-    println!(
+    printer(1.1,format!(
                 "{color_red}ERROR:{color_reset} Unknown command. Use `{color_yellow}{me_bin}{color_reset} {color_blue}help{color_reset}` for help."
-            );
+            ));
     process::exit(1);
 }
 
 fn to_file(contents: &str, file: &str) {
     to_file2(contents, file)
-        .map_err(|err| println!("{:?}", err))
+        .map_err(|err| eprintln!("{:?}", err))
         .ok();
 }
 fn to_file2(contents: &str, file: &str) -> std::io::Result<()> {
@@ -403,7 +444,7 @@ fn return_pathslashfile(file: &str) -> String {
 
 fn check_save_data_version() {
     if Path::new(&return_pathslashfile("bananen.toml")).exists() {
-        println!("{color_red}ERROR:{color_reset} This configuration file ({0}) is incompatible with this Bananen version, either reinit and manually update it, or use a different bananen version.", return_pathslashfile("bananen.toml"));
+        printer(2.3,format!("{color_red}ERROR:{color_reset} This configuration file ({0}) is incompatible with this Bananen version, either reinit and manually update it, or use a different bananen version.", return_pathslashfile("bananen.toml")));
         process::exit(1);
     }
     let savefile = &get_save_file_path();
@@ -414,11 +455,11 @@ fn check_save_data_version() {
     let parsedsavefile: BasicBananenSaveData =
         serde_json::from_str(unparsed_config).expect(&expectationerror);
     if parsedsavefile.main.bananendata_version != BANANEN_CONFIG_VERSION {
-        println!("{color_red}ERROR:{color_reset} This \"{0}\" (v{1}) is incompatible with the Bananen savedata this installation supports (v{2}), either reinit and manually update it, or use a different bananen version.",
+        printer(2.3,format!("{color_red}ERROR:{color_reset} This \"{0}\" (v{1}) is incompatible with the Bananen savedata this installation supports (v{2}), either reinit and manually update it, or use a different bananen version.",
             savefile,
              parsedsavefile.main.bananendata_version,
              BANANEN_CONFIG_VERSION
-        );
+        ));
         process::exit(1);
     }
 }

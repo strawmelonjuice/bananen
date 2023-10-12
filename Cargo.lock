@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "bananen"
-version = "0.1.7-alpha"
+version = "0.1.7-beta"
 dependencies = [
  "inline_colorization",
  "serde",

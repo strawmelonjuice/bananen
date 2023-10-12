@@ -1,0 +1,17 @@
+--minimal — quiet, programmatical mode in which only codes (doubles) are send to the stdout.
+
+    Faillure:
+        1.1         Missing or unknown command parameter
+        1.2         Only found incompatible config.
+        1.3         No config found. Initialisation needed.
+        1.4         Incorrect additiontype
+        1.5         No release name found for this dub.
+        2.1         'bananen.json' already exists, not using force to overwrite it.
+        2.2         No changes found in unreleased.
+        2.3         BananenConfig unsupported by current Bananen version.
+
+    Succes:
+        0.0 (0)     No need to log this. (Cosmetical)
+        0.1         Succesful log addition.
+        0.2         Succesful log regeneration.
+        0.3         Succesful dub.

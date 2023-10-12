@@ -1,5 +1,6 @@
-{"main": {
-    "bananen_version": "0.1.6-alpha",
+{
+  "main": {
+    "bananen_version": "0.1.7-alpha",
     "bananendata_version": 3
   },
   "config": {
@@ -39,6 +40,16 @@
       {
         "contents": "Made the json scheme injector a bit more foolproof.",
         "type": 2,
+        "breaking": false
+      },
+      {
+        "contents": "Add `--minimal` mode.",
+        "type": 1,
+        "breaking": false
+      },
+      {
+        "contents": "Add `--minimal` mode",
+        "type": 1,
         "breaking": false
       }
     ],
