@@ -47,12 +47,7 @@
             "breaking": false
           },
           {
-            "contents": "Add `--minimal` mode.",
-            "type": 1,
-            "breaking": false
-          },
-          {
-            "contents": "Add `--minimal` mode",
+            "contents": "Add `--minimal` mode (allowing advanced usage in for example Kivi).",
             "type": 1,
             "breaking": false
           }
