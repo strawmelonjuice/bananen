@@ -3,17 +3,16 @@ name = "bananen"
 description= "CLI changelog generator written in Rust"
 version = "0.1.7-beta"
 edition = "2021"
+authors = ["MLC Bloeiman <mar@strawmelonjuice.com>"]
 repository = "https://github.com/strawmelonjuice/bananen/"
 license = "GPL-3.0"
+readme = "README.md"
+homepage = "https://github.com/you/grrs"
+keywords = ["cli", "changelogs", "markdown"]
+categories = ["command-line-utilities"]
+
 
 [dependencies]
 inline_colorization = "0.1.5"
 serde = { version = "1.0.104", features = ["derive"] }
 serde_json = "1.0.107"
-
-[package.metadata.bundle]
-name = "Bananen"
-identifier = "com.strawmelonjuice.bananentool"
-copyright= "By Strawmelonjuice Mar"
-category= "Developer Tool"
-short_description= "CLI changelog generator written in Rust"
