@@ -6,6 +6,17 @@
 
 # Get <span style="background-color: #24273a; color: #ffcc00">Bananen! 🍌</span>
 
-Just go to the [releases](https://github.com/strawmelonjuice/bananen/releases/latest) page and download from there.
+### Getting bananen `0.1.7-beta2` from [`Cargo`](https://rustup.rs/)
+
+With `cargo` installed, run:
+
+```bash
+cargo install bananen --version 0.1.7-beta2
+```
+
+### --other ways (and versions!)--
+
+Just go to the [releases](https://github.com/strawmelonjuice/bananen/releases/latest) page and see from there.
+
 
 _This page will get a more detailed description in the future._
