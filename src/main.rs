@@ -1,4 +1,7 @@
-pub use inline_colorization::{style_bold, style_underline, style_reset, color_black, color_red, color_green, color_yellow, color_reset, color_blue, color_magenta, color_cyan, bg_white, bg_reset};
+pub use inline_colorization::{
+    bg_reset, bg_white, color_black, color_blue, color_cyan, color_green, color_magenta, color_red,
+    color_reset, color_yellow, style_bold, style_reset, style_underline,
+};
 use serde::{Deserialize, Serialize};
 use std::env;
 use std::fs::File;
@@ -635,47 +638,49 @@ fn to_savefile(contents: String) {
     to_file(&contents_schematised, savefile);
 }
 
-
-fn prespan( additiontype: i32, localsavedata: &BananenSaveDatav3) -> String {
-    match additiontype {4 => {
-        format!(
-            r#"**<span style="color: {0}">{1}</span>**"#,
-            localsavedata.config.customisation.changetypes.removal.color,
-            localsavedata
-                .config
-                .customisation
-                .changetypes
-                .removal
-                .translation
-        )
-    } 3 => {
-        format!(
-            r#"**<span style="color: {0}">{1}</span>**"#,
-            localsavedata.config.customisation.changetypes.fix.color,
-            localsavedata
-                .config
-                .customisation
-                .changetypes
-                .fix
-                .translation
-        )
-    }, 1 => {
-        format!(
-            r#"**<span style="color: {0}">{1}</span>**"#,
-            localsavedata
-                .config
-                .customisation
-                .changetypes
-                .addition
-                .color,
-            localsavedata
-                .config
-                .customisation
-                .changetypes
-                .addition
-                .translation
-        )
-    },
+fn prespan(additiontype: i32, localsavedata: &BananenSaveDatav3) -> String {
+    match additiontype {
+        4 => {
+            format!(
+                r#"**<span style="color: {0}">{1}</span>**"#,
+                localsavedata.config.customisation.changetypes.removal.color,
+                localsavedata
+                    .config
+                    .customisation
+                    .changetypes
+                    .removal
+                    .translation
+            )
+        }
+        3 => {
+            format!(
+                r#"**<span style="color: {0}">{1}</span>**"#,
+                localsavedata.config.customisation.changetypes.fix.color,
+                localsavedata
+                    .config
+                    .customisation
+                    .changetypes
+                    .fix
+                    .translation
+            )
+        }
+        1 => {
+            format!(
+                r#"**<span style="color: {0}">{1}</span>**"#,
+                localsavedata
+                    .config
+                    .customisation
+                    .changetypes
+                    .addition
+                    .color,
+                localsavedata
+                    .config
+                    .customisation
+                    .changetypes
+                    .addition
+                    .translation
+            )
+        }
         2 => {
             format!(
                 r#"**<span style="color: {0}">{1}</span>**"#,
@@ -687,7 +692,7 @@ fn prespan( additiontype: i32, localsavedata: &BananenSaveDatav3) -> String {
                     .update
                     .translation
             )
-        },
+        }
         _ => additiontype.to_string(),
-    };
+    }
 }
