@@ -1,4 +1,4 @@
-pub use inline_colorization::{
+use inline_colorization::{
     bg_reset, bg_white, color_black, color_blue, color_cyan, color_green, color_magenta, color_red,
     color_reset, color_yellow, style_bold, style_reset, style_underline,
 };
@@ -83,10 +83,10 @@ fn arpl(n: u8) -> usize {
         n.into()
     } else if env::args()
         .nth(1)
-        .unwrap_or("unknown".to_string())
+        .unwrap_or(String::from("unknown"))
         .starts_with('-')
-        && (env::args().nth(1).unwrap_or("unknown".to_string()) != "--help")
-        && (env::args().nth(1).unwrap_or("unknown".to_string()) != "-h")
+        && (env::args().nth(1).unwrap_or(String::from("unknown")) != "--help")
+        && (env::args().nth(1).unwrap_or(String::from("unknown")) != "-h")
     {
         (n + 1).into()
     } else {
@@ -96,29 +96,29 @@ fn arpl(n: u8) -> usize {
 fn printer(c: f32, f: String) {
     if env::args()
         .nth(1)
-        .unwrap_or("unknown".to_string())
+        .unwrap_or(String::from("unknown"))
         .starts_with("--min")
         || env::args()
             .nth(1)
-            .unwrap_or("unknown".to_string())
+            .unwrap_or(String::from("unknown"))
             .starts_with("-m")
     {
         if c != 0.0 {
             print!("{}", c);
         }
-    } else if env::args().nth(1).unwrap_or("unknown".to_string()) == "--dump-codes" {
+    } else if env::args().nth(1).unwrap_or(String::from("unknown")) == "--dump-codes" {
         println!("c: {0}    f: {1}", c, f);
     } else {
         println!("{}", f);
     }
 }
 fn main() {
-    let me_bin = env::args().next().unwrap_or("unknown".to_string());
+    let me_bin = env::args().next().unwrap_or(String::from("unknown"));
     let _kivimode: bool = env::args()
         .nth(1)
-        .unwrap_or("unknown".to_string())
+        .unwrap_or(String::from("unknown"))
         .starts_with("--min");
-    let command = env::args().nth(arpl(1)).unwrap_or("none".to_string());
+    let command = env::args().nth(arpl(1)).unwrap_or(String::from("none"));
     printer( 0.0, format!("{style_bold}{color_yellow}Bananen! 🍌{color_reset} v{VERSION}\n{style_reset}By {color_red}Straw{color_green}melon{color_yellow}juice {color_magenta}Mar{color_reset}."));
     if command == "none" {
         printer( 1.1, format!(
@@ -127,10 +127,10 @@ fn main() {
         process::exit(1);
     }
     let _bananen_version: &str = env!("CARGO_PKG_VERSION");
-    let _a: String = env::args().nth(arpl(2)).unwrap_or("".to_string());
-    let _b: String = env::args().nth(arpl(3)).unwrap_or("".to_string());
-    let _c: String = env::args().nth(arpl(4)).unwrap_or("".to_string());
-    let _d: String = env::args().nth(arpl(5)).unwrap_or("".to_string());
+    let _a: String = env::args().nth(arpl(2)).unwrap_or(String::from(""));
+    let _b: String = env::args().nth(arpl(3)).unwrap_or(String::from(""));
+    let _c: String = env::args().nth(arpl(4)).unwrap_or(String::from(""));
+    let _d: String = env::args().nth(arpl(5)).unwrap_or(String::from(""));
     let savefile: &str = &get_save_file_path();
 
     if command == "help" || command == "h" || command == "--help" || command == "-h" {
@@ -188,28 +188,28 @@ fn main() {
                 bananendata_version: BANANEN_CONFIG_VERSION,
             }),
             config: (BananenConfig {
-                changelogfile: "changelog.md".to_string(),
+                changelogfile: String::from("changelog.md"),
                 rollingrelease: false,
                 customisation: BananenCustomisations {
-                    log_name: "Changelog".to_string(),
-                    released_name: "Releases".to_string(),
-                    unreleased_name: "Unreleased changes".to_string(),
+                    log_name: String::from("Changelog"),
+                    released_name: String::from("Releases"),
+                    unreleased_name: String::from("Unreleased changes"),
                     changetypes: (Changetypes {
                         addition: (Changetype {
-                            translation: "Addition".to_string(),
-                            color: "#336600".to_string(),
+                            translation: String::from("Addition"),
+                            color: String::from("#336600"),
                         }),
                         removal: (Changetype {
-                            translation: "Removal".to_string(),
-                            color: "#ff0000".to_string(),
+                            translation: String::from("Removal"),
+                            color: String::from("#ff0000"),
                         }),
                         update: (Changetype {
-                            translation: "Update".to_string(),
-                            color: "#0033cc".to_string(),
+                            translation: String::from("Update"),
+                            color: String::from("#0033cc"),
                         }),
                         fix: (Changetype {
-                            translation: "Fix".to_string(),
-                            color: "#9900cc".to_string(),
+                            translation: String::from("Update"),
+                            color: String::from("#9900cc"),
                         }),
                     }),
                 },
@@ -242,7 +242,7 @@ fn main() {
     let mut _savedata = load_save_file();
     _savedata.main.bananen_version = VERSION.to_string();
     if command == "add" || command == "a" {
-        if _a == "" || _b == "" {
+        if _a.is_empty() || _b.is_empty() {
             printer(1.4,format!(
                 "{color_red}ERROR:{color_reset} No argument found for this {color_blue}add{color_reset}ition what do I need to add?"
             ));
@@ -287,7 +287,7 @@ fn main() {
         let additiontype = if additiontype == "up" || additiontype == "u" {
             "update"
         } else {
-            &additiontype
+            additiontype
         };
         if additiontype == "solve" || additiontype == "f" {
             printer(
@@ -301,7 +301,7 @@ fn main() {
         let additiontype = if additiontype == "solve" || additiontype == "f" {
             "fix"
         } else {
-            &additiontype
+            additiontype
         };
         if additiontype == "rem" || additiontype == "del" || additiontype == "r" {
             printer(
@@ -322,7 +322,7 @@ fn main() {
         {
             "removal"
         } else {
-            &additiontype
+            additiontype
         };
         if !(additiontype == "removal"
             || additiontype == "fix"
@@ -344,7 +344,7 @@ fn main() {
         } else {
             4
         };
-        let changelogfile = format!("{}", _savedata.config.changelogfile);
+        let changelogfile = _savedata.config.changelogfile.clone();
 
         printer(
             0.1,
@@ -358,7 +358,7 @@ fn main() {
         let xychange: Change = Change {
             contents: _b,
             r#type: additiontype,
-            breaking: if _c == "--breaking" { true } else { false },
+            breaking: _c == "--breaking",
         };
         let mut newchange = Vec::new();
         newchange.push(xychange);
@@ -373,7 +373,7 @@ fn main() {
         process::exit(0);
     }
     if command == "regen" || command == "r" {
-        let changelogfile = format!("{}", _savedata.config.changelogfile);
+        let changelogfile = _savedata.config.changelogfile.clone();
         to_file(
             &generate_markdown_log(_savedata.saved_changes),
             return_pathslashfile(&changelogfile).as_str(),
@@ -388,7 +388,7 @@ fn main() {
         process::exit(0);
     }
     if command == "dub" || command == "d" || command == "push" || command == "bump" {
-        if _a == "" {
+        if _a.is_empty() {
             printer(1.5,format!(
                 "{color_red}ERROR:{color_reset} No release name found for this {color_blue}dub{color_reset}. Cannot log an unnamed release!"
             ));
@@ -401,7 +401,7 @@ fn main() {
             process::exit(1);
         }
         let releasename: String = _a.clone();
-        let changelogfile = format!("{}", _savedata.config.changelogfile);
+        let changelogfile = _savedata.config.changelogfile.clone();
         printer(
             0.3,
             format!(
@@ -450,20 +450,18 @@ fn from_file(file: &str) -> String {
     let mut contents = String::new();
     let expectationerror = format!("{color_red}ERROR:{color_reset} Looks like '{file}' isn't what I expected. I could not read that file.");
     o.read_to_string(&mut contents).expect(&expectationerror);
-    return contents;
+    contents
 }
 fn load_save_file() -> BananenSaveDatav3 {
     let savefile = &get_save_file_path();
     let unparsed_confi = from_file(savefile);
     let unparsed_config: &str = unparsed_confi.as_str();
-    let me_bin = env::args().nth(0).unwrap_or("unknown".to_string());
+    let me_bin = env::args().next().unwrap_or(String::from("unknown"));
     let expectationerror = format!("{color_red}ERROR:{color_reset} Expected I could understand '{color_cyan}{savefile}{color_reset}'!\nIf you don't mind resetting everything bananen has done, please reinitialise it with:\n`{color_yellow}{me_bin}{color_reset} {color_blue}init{color_reset} {color_black}{bg_white}--proceed{color_reset}{bg_reset}`.");
-    let parsedsavefile: BananenSaveDatav3 =
-        serde_json::from_str(unparsed_config).expect(&expectationerror);
-    return parsedsavefile;
+    serde_json::from_str(unparsed_config).expect(&expectationerror)
 }
 fn get_save_file_path() -> String {
-    return return_pathslashfile("bananen.json");
+    return_pathslashfile("bananen.json")
 }
 fn return_pathslashfile(file: &str) -> String {
     let expectationerror =
@@ -471,12 +469,11 @@ fn return_pathslashfile(file: &str) -> String {
     let cd = env::current_dir().expect(&expectationerror);
     let sep = if cfg!(windows) { "\\" } else { "/" };
     let filed = if cfg!(windows) {
-        file.replace("/", "\\")
+        file.replace('/', "\\")
     } else {
-        file.replace("\\", "/")
+        file.replace('\\', "/")
     };
-    let returns: String = format!("{0}{sep}{1}", cd.display(), filed);
-    return returns;
+    format!("{0}{sep}{1}", cd.display(), filed)
 }
 
 fn check_save_data_version() {
@@ -487,7 +484,7 @@ fn check_save_data_version() {
     let savefile = &get_save_file_path();
     let unparsed_confi = from_file(savefile);
     let unparsed_config: &str = unparsed_confi.as_str();
-    let me_bin = env::args().nth(0).unwrap_or("unknown".to_string());
+    let me_bin = env::args().next().unwrap_or(String::from("unknown"));
     let expectationerror = format!("{color_red}ERROR:{color_reset} Expected I could understand '{color_cyan}{savefile}{color_reset}'!\nIf you don't mind resetting everything bananen has done, please reinitialise it with:\n`{color_yellow}{me_bin}{color_reset} {color_blue}init{color_reset} {color_black}{bg_white}--proceed{color_reset}{bg_reset}`.");
     let parsedsavefile: BasicBananenSaveData =
         serde_json::from_str(unparsed_config).expect(&expectationerror);
@@ -504,7 +501,7 @@ fn generate_markdown_log(changes: BananensavedChanges) -> String {
     let localsavedata = load_save_file();
     let markdown: String;
     if !localsavedata.config.rollingrelease {
-        let mut unreleasedchanges_md: String = "No unreleased changes.".to_string();
+        let mut unreleasedchanges_md = String::from("No unreleased changes.");
         for change in changes.unreleased {
             let additiontype = change.r#type;
             let prespan = prespan(additiontype, &localsavedata);
@@ -514,7 +511,7 @@ fn generate_markdown_log(changes: BananensavedChanges) -> String {
                 ""
             };
             if unreleasedchanges_md == "No unreleased changes." {
-                unreleasedchanges_md = "".to_string()
+                unreleasedchanges_md = String::from("")
             };
             unreleasedchanges_md = format!(
                 "- {3} {0}: {1}\n\r{2}",
@@ -524,9 +521,9 @@ fn generate_markdown_log(changes: BananensavedChanges) -> String {
         let mut releasedchanges_md: String = "No releases yet.".to_string();
         for release in changes.released {
             if releasedchanges_md == "No releases yet." {
-                releasedchanges_md = "".to_string()
+                releasedchanges_md = String::from("")
             };
-            let mut release_md: String = "".to_string();
+            let mut release_md: String = String::from("");
             for change in &release.changes {
                 let additiontype = change.r#type;
                 let prespan = prespan(additiontype, &localsavedata);
@@ -575,7 +572,7 @@ This file was auto generated by [<span style="background-color: #24273a; color: 
         let mut changes_md: String = "No changes.".to_string();
         for change in changes.unreleased {
             if changes_md == "No unreleased changes." {
-                changes_md = "".to_string()
+                changes_md = String::from("")
             };
             let additiontype = change.r#type;
             let prespan = prespan(additiontype, &localsavedata);
@@ -590,10 +587,10 @@ This file was auto generated by [<span style="background-color: #24273a; color: 
             );
         }
         for release in changes.released {
-            let mut release_md: String = "".to_string();
+            let mut release_md: String = String::from("");
             for change in &release.changes {
                 if changes_md == "No unreleased changes." {
-                    changes_md = "".to_string()
+                    changes_md = String::from("")
                 };
                 let additiontype = change.r#type;
                 let prespan = prespan(additiontype, &localsavedata);

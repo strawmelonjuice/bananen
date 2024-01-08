@@ -1,6 +1,6 @@
 {
   "main": {
-    "bananen_version": "0.1.7-beta",
+    "bananen_version": "0.1.8",
     "bananendata_version": 3
   },
   "config": {
@@ -33,6 +33,16 @@
   "saved_changes": {
     "unreleased": [],
     "released": [
+      {
+        "name": "v0.1.8",
+        "changes": [
+          {
+            "contents": "Some consistency changes, including the replace of some dumb code. Dumb code may still exist.",
+            "type": 2,
+            "breaking": false
+          }
+        ]
+      },
       {
         "name": "v0.1.7-beta",
         "changes": [
