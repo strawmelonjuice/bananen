@@ -1,4 +1,4 @@
-use inline_colorization::*;
+pub use inline_colorization::{style_bold, style_underline, style_reset, color_black, color_red, color_green, color_yellow, color_reset, color_blue, color_magenta, color_cyan, bg_white, bg_reset};
 use serde::{Deserialize, Serialize};
 use std::env;
 use std::fs::File;
@@ -76,39 +76,46 @@ struct Change {
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 fn arpl(n: u8) -> usize {
-    return if n < 1 {
+    if n < 1 {
         n.into()
-    } else if env::args().nth(1).unwrap_or("unknown".to_string()).starts_with("-") && (env::args().nth(1).unwrap_or("unknown".to_string()) != "--help")  && (env::args().nth(1).unwrap_or("unknown".to_string()) != "-h") {
+    } else if env::args()
+        .nth(1)
+        .unwrap_or("unknown".to_string())
+        .starts_with('-')
+        && (env::args().nth(1).unwrap_or("unknown".to_string()) != "--help")
+        && (env::args().nth(1).unwrap_or("unknown".to_string()) != "-h")
+    {
         (n + 1).into()
     } else {
         n.into()
-    };
+    }
 }
 fn printer(c: f32, f: String) {
-    if env::args().nth(1).unwrap_or("unknown".to_string()).starts_with("--min") || env::args().nth(1).unwrap_or("unknown".to_string()).starts_with("-m") {
+    if env::args()
+        .nth(1)
+        .unwrap_or("unknown".to_string())
+        .starts_with("--min")
+        || env::args()
+            .nth(1)
+            .unwrap_or("unknown".to_string())
+            .starts_with("-m")
+    {
         if c != 0.0 {
             print!("{}", c);
         }
-        return;
+    } else if env::args().nth(1).unwrap_or("unknown".to_string()) == "--dump-codes" {
+        println!("c: {0}    f: {1}", c, f);
     } else {
-        if env::args().nth(1).unwrap_or("unknown".to_string()) == "--dump-codes" {
-            print!("c: {0}    f: {1}\n", c, f);
-        } else {
-        print!("{}\n", f);
-    }
-        return;
+        println!("{}", f);
     }
 }
 fn main() {
-    let me_bin = env::args().nth(0).unwrap_or("unknown".to_string());
-    let _kivimode: bool = if env::args().nth(1).unwrap_or("unknown".to_string()).starts_with("--min") {
-        true
-    } else {
-        false
-    };
-    let command = env::args()
-        .nth(arpl(1))
-        .unwrap_or("none".to_string());
+    let me_bin = env::args().next().unwrap_or("unknown".to_string());
+    let _kivimode: bool = env::args()
+        .nth(1)
+        .unwrap_or("unknown".to_string())
+        .starts_with("--min");
+    let command = env::args().nth(arpl(1)).unwrap_or("none".to_string());
     printer( 0.0, format!("{style_bold}{color_yellow}Bananen! 🍌{color_reset} v{VERSION}\n{style_reset}By {color_red}Straw{color_green}melon{color_yellow}juice {color_magenta}Mar{color_reset}."));
     if command == "none" {
         printer( 1.1, format!(
@@ -124,7 +131,7 @@ fn main() {
     let savefile: &str = &get_save_file_path();
 
     if command == "help" || command == "h" || command == "--help" || command == "-h" {
-        if _a == "" || _a == "1" {
+        if _a.is_empty() || _a == "1" {
             printer(
                 0.0,
                 format!(
@@ -155,60 +162,66 @@ fn main() {
         };
 
         if _a == "v" || _a == "version" || _a == "ver" {
-            print!("{}\n", _bananen_version);
+            println!("{}", _bananen_version);
             process::exit(0)
         }
     }
     if command == "init" || command == "i" {
         if Path::new(&get_save_file_path()).exists() && _a != "--proceed" {
-            printer(2.1, format!(
+            printer(
+                2.1,
+                format!(
                     r#"
     {color_red}Warning:{color_reset}
     '{color_cyan}{savefile}{color_reset}' already exists.
     Use with {color_black}{bg_white}--proceed{color_reset}{bg_reset} if you're willing to overwrite it."#
-                ));
+                ),
+            );
             process::exit(0);
         }
         let clean_save_data: BananenSaveDatav3 = BananenSaveDatav3 {
             main: (BananenSaveDataMain {
-                bananen_version: (_bananen_version.to_string()),
-                bananendata_version: (BANANEN_CONFIG_VERSION),
+                bananen_version: _bananen_version.to_string(),
+                bananendata_version: BANANEN_CONFIG_VERSION,
             }),
             config: (BananenConfig {
-                changelogfile: ("changelog.md".to_string()),
+                changelogfile: "changelog.md".to_string(),
                 rollingrelease: false,
                 customisation: BananenCustomisations {
-                    log_name: ("Changelog".to_string()),
-                    released_name: ("Releases".to_string()),
-                    unreleased_name: ("Unreleased changes".to_string()),
+                    log_name: "Changelog".to_string(),
+                    released_name: "Releases".to_string(),
+                    unreleased_name: "Unreleased changes".to_string(),
                     changetypes: (Changetypes {
                         addition: (Changetype {
-                            translation: ("Addition".to_string()),
-                            color: ("#336600".to_string()),
+                            translation: "Addition".to_string(),
+                            color: "#336600".to_string(),
                         }),
                         removal: (Changetype {
-                            translation: ("Removal".to_string()),
-                            color: ("#ff0000".to_string()),
+                            translation: "Removal".to_string(),
+                            color: "#ff0000".to_string(),
                         }),
                         update: (Changetype {
-                            translation: ("Update".to_string()),
-                            color: ("#0033cc".to_string()),
+                            translation: "Update".to_string(),
+                            color: "#0033cc".to_string(),
                         }),
                         fix: (Changetype {
-                            translation: ("Fix".to_string()),
-                            color: ("#9900cc".to_string()),
+                            translation: "Fix".to_string(),
+                            color: "#9900cc".to_string(),
                         }),
                     }),
                 },
             }),
             saved_changes: (BananensavedChanges {
-                unreleased: ([].to_vec()),
-                released: ([].to_vec()),
+                unreleased: [].to_vec(),
+                released: [].to_vec(),
             }),
         };
         let clean_save_data_md =
             serde_json::to_string(&clean_save_data).expect("Could not create clean save data.");
-        printer(0.2,format!("Writing new save data to '{color_cyan}{savefile}{color_reset}'!"));
+        printer(
+            0.2,
+            format!("Writing new save data to '{color_cyan}{savefile}{color_reset}'!"),
+        );
         to_savefile(clean_save_data_md.to_string());
         process::exit(0);
     }
@@ -234,16 +247,19 @@ fn main() {
         }
         let additiontype: String = _a.clone();
         if additiontype == "add" || additiontype == "a" {
-            printer(0.0, format!(
-                "(Accepted short `{0}` as `{1}`)",
-                additiontype,
-                _savedata
-                    .config
-                    .customisation
-                    .changetypes
-                    .addition
-                    .translation
-            ));
+            printer(
+                0.0,
+                format!(
+                    "(Accepted short `{0}` as `{1}`)",
+                    additiontype,
+                    _savedata
+                        .config
+                        .customisation
+                        .changetypes
+                        .addition
+                        .translation
+                ),
+            );
         }
         let additiontype = if additiontype == "add" || additiontype == "a" {
             "addition"
@@ -251,16 +267,19 @@ fn main() {
             &additiontype
         };
         if additiontype == "up" || additiontype == "u" {
-            printer(0.0,format!(
-                "(Accepted short `{0}` as `{1}`)",
-                additiontype,
-                _savedata
-                    .config
-                    .customisation
-                    .changetypes
-                    .update
-                    .translation
-            ));
+            printer(
+                0.0,
+                format!(
+                    "(Accepted short `{0}` as `{1}`)",
+                    additiontype,
+                    _savedata
+                        .config
+                        .customisation
+                        .changetypes
+                        .update
+                        .translation
+                ),
+            );
         }
         let additiontype = if additiontype == "up" || additiontype == "u" {
             "update"
@@ -268,10 +287,13 @@ fn main() {
             &additiontype
         };
         if additiontype == "solve" || additiontype == "f" {
-            printer(0.0, format!(
-                "(Accepted short `{0}` as `{1}`)",
-                additiontype, _savedata.config.customisation.changetypes.fix.translation
-            ));
+            printer(
+                0.0,
+                format!(
+                    "(Accepted short `{0}` as `{1}`)",
+                    additiontype, _savedata.config.customisation.changetypes.fix.translation
+                ),
+            );
         }
         let additiontype = if additiontype == "solve" || additiontype == "f" {
             "fix"
@@ -279,16 +301,19 @@ fn main() {
             &additiontype
         };
         if additiontype == "rem" || additiontype == "del" || additiontype == "r" {
-            printer(0.0, format!(
-                "(Accepted short `{0}` as `{1}`)",
-                additiontype,
-                _savedata
-                    .config
-                    .customisation
-                    .changetypes
-                    .removal
-                    .translation
-            ));
+            printer(
+                0.0,
+                format!(
+                    "(Accepted short `{0}` as `{1}`)",
+                    additiontype,
+                    _savedata
+                        .config
+                        .customisation
+                        .changetypes
+                        .removal
+                        .translation
+                ),
+            );
         }
         let additiontype = if additiontype == "rem" || additiontype == "del" || additiontype == "f"
         {
@@ -318,16 +343,19 @@ fn main() {
         };
         let changelogfile = format!("{}", _savedata.config.changelogfile);
 
-        printer(0.1,format!(
-            "{color_green}{0}{color_reset}: '{1}' --> unreleased@\"{2}\"",
-            unedited_additiontype,
-            _b,
-            return_pathslashfile(&changelogfile)
-        ));
+        printer(
+            0.1,
+            format!(
+                "{color_green}{0}{color_reset}: '{1}' --> unreleased@\"{2}\"",
+                unedited_additiontype,
+                _b,
+                return_pathslashfile(&changelogfile)
+            ),
+        );
         let xychange: Change = Change {
-            contents: (_b),
-            r#type: (additiontype),
-            breaking: (if _c == "--breaking" { true } else { false }),
+            contents: _b,
+            r#type: additiontype,
+            breaking: if _c == "--breaking" { true } else { false },
         };
         let mut newchange = Vec::new();
         newchange.push(xychange);
@@ -347,10 +375,13 @@ fn main() {
             &generate_markdown_log(_savedata.saved_changes),
             return_pathslashfile(&changelogfile).as_str(),
         );
-        printer(0.2,format!(
-            "{color_green}Regenerated {color_reset}'{0}'!",
-            return_pathslashfile(&changelogfile)
-        ));
+        printer(
+            0.2,
+            format!(
+                "{color_green}Regenerated {color_reset}'{0}'!",
+                return_pathslashfile(&changelogfile)
+            ),
+        );
         process::exit(0);
     }
     if command == "dub" || command == "d" || command == "push" || command == "bump" {
@@ -368,14 +399,17 @@ fn main() {
         }
         let releasename: String = _a.clone();
         let changelogfile = format!("{}", _savedata.config.changelogfile);
-        printer(0.3, format!(
-            "unreleased@'{1}' --> {color_green}{0}{color_reset}@\"{1}\"",
-            releasename,
-            return_pathslashfile(&changelogfile)
-        ));
+        printer(
+            0.3,
+            format!(
+                "unreleased@'{1}' --> {color_green}{0}{color_reset}@\"{1}\"",
+                releasename,
+                return_pathslashfile(&changelogfile)
+            ),
+        );
         let mut newreleases: Vec<ReleasedChanges> = [ReleasedChanges {
-            name: (releasename),
-            changes: (_savedata.saved_changes.unreleased),
+            name: releasename,
+            changes: _savedata.saved_changes.unreleased,
         }]
         .to_vec();
         _savedata.saved_changes.unreleased = [].to_vec();
@@ -463,65 +497,14 @@ fn check_save_data_version() {
         process::exit(1);
     }
 }
-fn generate_markdown_log(changes: BananensavedChanges) -> std::string::String {
+fn generate_markdown_log(changes: BananensavedChanges) -> String {
     let localsavedata = load_save_file();
     let markdown: String;
-    if !(localsavedata.config.rollingrelease) {
+    if !localsavedata.config.rollingrelease {
         let mut unreleasedchanges_md: String = "No unreleased changes.".to_string();
         for change in changes.unreleased {
             let additiontype = change.r#type;
-            let prespan = if additiontype == 4 {
-                format!(
-                    r#"**<span style="color: {0}">{1}</span>**"#,
-                    localsavedata.config.customisation.changetypes.removal.color,
-                    localsavedata
-                        .config
-                        .customisation
-                        .changetypes
-                        .removal
-                        .translation
-                )
-            } else if additiontype == 3 {
-                format!(
-                    r#"**<span style="color: {0}">{1}</span>**"#,
-                    localsavedata.config.customisation.changetypes.fix.color,
-                    localsavedata
-                        .config
-                        .customisation
-                        .changetypes
-                        .fix
-                        .translation
-                )
-            } else if additiontype == 1 {
-                format!(
-                    r#"**<span style="color: {0}">{1}</span>**"#,
-                    localsavedata
-                        .config
-                        .customisation
-                        .changetypes
-                        .addition
-                        .color,
-                    localsavedata
-                        .config
-                        .customisation
-                        .changetypes
-                        .addition
-                        .translation
-                )
-            } else if additiontype == 2 {
-                format!(
-                    r#"**<span style="color: {0}">{1}</span>**"#,
-                    localsavedata.config.customisation.changetypes.update.color,
-                    localsavedata
-                        .config
-                        .customisation
-                        .changetypes
-                        .update
-                        .translation
-                )
-            } else {
-                additiontype.to_string()
-            };
+            let prespan = prespan(additiontype, &localsavedata);
             let breakingoption = if change.breaking {
                 r#"<span style="color: red; background-color: #ffcc00">BREAKING!</span>"#
             } else {
@@ -543,58 +526,7 @@ fn generate_markdown_log(changes: BananensavedChanges) -> std::string::String {
             let mut release_md: String = "".to_string();
             for change in &release.changes {
                 let additiontype = change.r#type;
-                let prespan = if additiontype == 4 {
-                    format!(
-                        r#"**<span style="color: {0}">{1}</span>**"#,
-                        localsavedata.config.customisation.changetypes.removal.color,
-                        localsavedata
-                            .config
-                            .customisation
-                            .changetypes
-                            .removal
-                            .translation
-                    )
-                } else if additiontype == 3 {
-                    format!(
-                        r#"**<span style="color: {0}">{1}</span>**"#,
-                        localsavedata.config.customisation.changetypes.fix.color,
-                        localsavedata
-                            .config
-                            .customisation
-                            .changetypes
-                            .fix
-                            .translation
-                    )
-                } else if additiontype == 1 {
-                    format!(
-                        r#"**<span style="color: {0}">{1}</span>**"#,
-                        localsavedata
-                            .config
-                            .customisation
-                            .changetypes
-                            .addition
-                            .color,
-                        localsavedata
-                            .config
-                            .customisation
-                            .changetypes
-                            .addition
-                            .translation
-                    )
-                } else if additiontype == 2 {
-                    format!(
-                        r#"**<span style="color: {0}">{1}</span>**"#,
-                        localsavedata.config.customisation.changetypes.update.color,
-                        localsavedata
-                            .config
-                            .customisation
-                            .changetypes
-                            .update
-                            .translation
-                    )
-                } else {
-                    additiontype.to_string()
-                };
+                let prespan = prespan(additiontype, &localsavedata);
                 let breakingoption = if change.breaking {
                     r#"<span style="color: red; background-color: #ffcc00">BREAKING!</span>"#
                 } else {
@@ -643,58 +575,7 @@ This file was auto generated by [<span style="background-color: #24273a; color: 
                 changes_md = "".to_string()
             };
             let additiontype = change.r#type;
-            let prespan = if additiontype == 4 {
-                format!(
-                    r#"**<span style="color: {0}">{1}</span>**"#,
-                    localsavedata.config.customisation.changetypes.removal.color,
-                    localsavedata
-                        .config
-                        .customisation
-                        .changetypes
-                        .removal
-                        .translation
-                )
-            } else if additiontype == 3 {
-                format!(
-                    r#"**<span style="color: {0}">{1}</span>**"#,
-                    localsavedata.config.customisation.changetypes.fix.color,
-                    localsavedata
-                        .config
-                        .customisation
-                        .changetypes
-                        .fix
-                        .translation
-                )
-            } else if additiontype == 1 {
-                format!(
-                    r#"**<span style="color: {0}">{1}</span>**"#,
-                    localsavedata
-                        .config
-                        .customisation
-                        .changetypes
-                        .addition
-                        .color,
-                    localsavedata
-                        .config
-                        .customisation
-                        .changetypes
-                        .addition
-                        .translation
-                )
-            } else if additiontype == 2 {
-                format!(
-                    r#"**<span style="color: {0}">{1}</span>**"#,
-                    localsavedata.config.customisation.changetypes.update.color,
-                    localsavedata
-                        .config
-                        .customisation
-                        .changetypes
-                        .update
-                        .translation
-                )
-            } else {
-                additiontype.to_string()
-            };
+            let prespan = prespan(additiontype, &localsavedata);
             let breakingoption = if change.breaking {
                 r#"<span style="color: red; background-color: #ffcc00">BREAKING!</span>"#
             } else {
@@ -712,58 +593,7 @@ This file was auto generated by [<span style="background-color: #24273a; color: 
                     changes_md = "".to_string()
                 };
                 let additiontype = change.r#type;
-                let prespan = if additiontype == 4 {
-                    format!(
-                        r#"**<span style="color: {0}">{1}</span>**"#,
-                        localsavedata.config.customisation.changetypes.removal.color,
-                        localsavedata
-                            .config
-                            .customisation
-                            .changetypes
-                            .removal
-                            .translation
-                    )
-                } else if additiontype == 3 {
-                    format!(
-                        r#"**<span style="color: {0}">{1}</span>**"#,
-                        localsavedata.config.customisation.changetypes.fix.color,
-                        localsavedata
-                            .config
-                            .customisation
-                            .changetypes
-                            .fix
-                            .translation
-                    )
-                } else if additiontype == 1 {
-                    format!(
-                        r#"**<span style="color: {0}">{1}</span>**"#,
-                        localsavedata
-                            .config
-                            .customisation
-                            .changetypes
-                            .addition
-                            .color,
-                        localsavedata
-                            .config
-                            .customisation
-                            .changetypes
-                            .addition
-                            .translation
-                    )
-                } else if additiontype == 2 {
-                    format!(
-                        r#"**<span style="color: {0}">{1}</span>**"#,
-                        localsavedata.config.customisation.changetypes.update.color,
-                        localsavedata
-                            .config
-                            .customisation
-                            .changetypes
-                            .update
-                            .translation
-                    )
-                } else {
-                    additiontype.to_string()
-                };
+                let prespan = prespan(additiontype, &localsavedata);
                 let breakingoption = if change.breaking {
                     r#"<span style="color: red; background-color: #ffcc00">BREAKING!</span>"#
                 } else {
@@ -794,7 +624,7 @@ This file was auto generated by [<span style="background-color: #24273a; color: 
         );
         markdown = md;
     }
-    return markdown;
+    markdown
 }
 fn to_savefile(contents: String) {
     let savefile = &get_save_file_path();
@@ -802,5 +632,62 @@ fn to_savefile(contents: String) {
     let schematisation = format!(r#"{bruh}"$schema": "{0}", "main":"#, JSON_SCHEMA_URL);
     let annoyos: String = format!(r#"{bruh}"main":"#);
     let contents_schematised: String = contents.replacen(&annoyos, &schematisation, 1);
-    to_file(&contents_schematised, &savefile);
+    to_file(&contents_schematised, savefile);
+}
+
+
+fn prespan( additiontype: i32, localsavedata: &BananenSaveDatav3) -> String {
+    match additiontype {4 => {
+        format!(
+            r#"**<span style="color: {0}">{1}</span>**"#,
+            localsavedata.config.customisation.changetypes.removal.color,
+            localsavedata
+                .config
+                .customisation
+                .changetypes
+                .removal
+                .translation
+        )
+    } 3 => {
+        format!(
+            r#"**<span style="color: {0}">{1}</span>**"#,
+            localsavedata.config.customisation.changetypes.fix.color,
+            localsavedata
+                .config
+                .customisation
+                .changetypes
+                .fix
+                .translation
+        )
+    }, 1 => {
+        format!(
+            r#"**<span style="color: {0}">{1}</span>**"#,
+            localsavedata
+                .config
+                .customisation
+                .changetypes
+                .addition
+                .color,
+            localsavedata
+                .config
+                .customisation
+                .changetypes
+                .addition
+                .translation
+        )
+    },
+        2 => {
+            format!(
+                r#"**<span style="color: {0}">{1}</span>**"#,
+                localsavedata.config.customisation.changetypes.update.color,
+                localsavedata
+                    .config
+                    .customisation
+                    .changetypes
+                    .update
+                    .translation
+            )
+        },
+        _ => additiontype.to_string(),
+    };
 }
