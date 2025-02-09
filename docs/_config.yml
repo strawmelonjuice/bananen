@@ -1,5 +1,0 @@
-# Does HTML work here? I hope so. -- Nope. ! Oh wait maybe with \\"\\"! -- also nope
-title: "Bananen! 🍌"
-author: "Strawmelonjuice"
-description: A simple CLI changelog.md generator written in Rust.
-theme: minima
