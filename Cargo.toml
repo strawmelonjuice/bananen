@@ -1,0 +1,8 @@
+[package]
+name = "bananen"
+version = "0.2.0"
+edition = "2024"
+
+[dependencies]
+clap = "4.6.6"
+sqlite = "0.37.0"
