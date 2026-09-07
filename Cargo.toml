@@ -2,6 +2,7 @@
 name = "bananen"
 version = "0.2.0"
 edition = "2024"
+license = "EUPL-1.2"
 
 [dependencies]
 clap = "4.6.6"
